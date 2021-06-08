@@ -1,0 +1,64 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1//EN" "http://www.apple.com/DTDs/PropertyList-1.dtd">
+<plist version="1">
+<dict>
+	<key>items</key>
+	<array>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>iPhone hello</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>key</key>
+			<string>enableHello</string>
+			<key>label</key>
+			<string>Enabled</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Successful authentication</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>key</key>
+			<string>showHelloGreeting</string>
+			<key>label</key>
+			<string>Show greeting</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string></string>
+			<key>placeholder</key>
+			<string>Hello Alice</string>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>label</key>
+			<string>Greeting:</string>
+			<key>key</key>
+			<string>greeting</string>
+		</dict>
+
+	</array>
+	<key>title</key>
+	<string>Diary</string>
+</dict>
+</plist>
