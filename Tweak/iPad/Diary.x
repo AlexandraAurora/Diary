@@ -242,8 +242,8 @@ CSCoverSheetView* coverSheetView = nil;
 - (void)didMoveToWindow { // remove original time label
 
 	%orig;
-
-    // remove original time label
+    
+    if (!hideDefaultTimeAndDateSwitch) return;
     SBUILegibilityLabel* originalTimeLabel = [self valueForKey:@"_timeLabel"];
     [originalTimeLabel removeFromSuperview];
 
@@ -257,6 +257,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     %orig;
 
+    if (!hideDefaultTimeAndDateSwitch) return;
     SBUILegibilityLabel* originalDateLabel = [self valueForKey:@"_label"];
     [originalDateLabel removeFromSuperview];
 
@@ -270,6 +271,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     %orig;
 
+    if (!hideDefaultTimeAndDateSwitch) return;
     [self removeFromSuperview];
 
 }
@@ -282,6 +284,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     %orig;
 
+    if (!hideDefaultTimeAndDateSwitch) return;
     SBFLockScreenAlternateDateLabel* lunarLabel = [self valueForKey:@"_alternateDateLabel"];
     [lunarLabel removeFromSuperview];
 

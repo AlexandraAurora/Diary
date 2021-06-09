@@ -253,7 +253,7 @@ CSCoverSheetView* coverSheetView = nil;
 
 	%orig;
 
-    // remove original time label
+    if (!hideDefaultTimeAndDateSwitch) return;
     SBUILegibilityLabel* originalTimeLabel = [self valueForKey:@"_timeLabel"];
     [originalTimeLabel removeFromSuperview];
 
@@ -267,6 +267,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     %orig;
 
+    if (!hideDefaultTimeAndDateSwitch) return;
     SBUILegibilityLabel* originalDateLabel = [self valueForKey:@"_label"];
     [originalDateLabel removeFromSuperview];
 
@@ -280,6 +281,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     %orig;
 
+    if (!hideDefaultTimeAndDateSwitch) return;
     [self removeFromSuperview];
 
 }
@@ -292,6 +294,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     %orig;
 
+    if (!hideDefaultTimeAndDateSwitch) return;
     SBFLockScreenAlternateDateLabel* lunarLabel = [self valueForKey:@"_alternateDateLabel"];
     [lunarLabel removeFromSuperview];
 
@@ -1818,7 +1821,7 @@ CSCoverSheetView* coverSheetView = nil;
         [[self diarySpotlightWallpaperView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         [[self diarySpotlightWallpaperView] setContentMode:UIViewContentModeScaleAspectFill];
         if ([spotlightWallpapers count]) [[coverSheetView diarySpotlightWallpaperView] setImage:[UIImage imageWithContentsOfFile:[spotlightWallpapers objectAtIndex:arc4random_uniform([spotlightWallpapers count])]]];
-        [self insertSubview:[self diarySpotlightWallpaperView] atIndex:0];
+        [self insertSubview:[self diarySpotlightWallpaperView] atIndex:enableSpotlightSwitch ? 3 : 0];
     }
 
 
@@ -1827,7 +1830,7 @@ CSCoverSheetView* coverSheetView = nil;
 	self.diaryGradient = [CAGradientLayer layer];
 	[[self diaryGradient] setFrame:[self bounds]];
 	[[self diaryGradient] setColors:@[(id)[[UIColor clearColor] CGColor], (id)[[UIColor clearColor] CGColor], (id)[[[UIColor blackColor] colorWithAlphaComponent:[backgroundGradientAmountValue doubleValue]] CGColor]]];
-	[[self layer] insertSublayer:[self diaryGradient] atIndex:enableSpotlightSwitch ? 3 : 0];
+	[[self layer] insertSublayer:[self diaryGradient] atIndex:3];
 
 }
 
