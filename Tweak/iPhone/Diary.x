@@ -1821,7 +1821,7 @@ CSCoverSheetView* coverSheetView = nil;
         [[self diarySpotlightWallpaperView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         [[self diarySpotlightWallpaperView] setContentMode:UIViewContentModeScaleAspectFill];
         if ([spotlightWallpapers count]) [[coverSheetView diarySpotlightWallpaperView] setImage:[UIImage imageWithContentsOfFile:[spotlightWallpapers objectAtIndex:arc4random_uniform([spotlightWallpapers count])]]];
-        [self insertSubview:[self diarySpotlightWallpaperView] atIndex:enableSpotlightSwitch ? 3 : 0];
+        [self insertSubview:[self diarySpotlightWallpaperView] atIndex:0];
     }
 
 
@@ -1830,7 +1830,7 @@ CSCoverSheetView* coverSheetView = nil;
 	self.diaryGradient = [CAGradientLayer layer];
 	[[self diaryGradient] setFrame:[self bounds]];
 	[[self diaryGradient] setColors:@[(id)[[UIColor clearColor] CGColor], (id)[[UIColor clearColor] CGColor], (id)[[[UIColor blackColor] colorWithAlphaComponent:[backgroundGradientAmountValue doubleValue]] CGColor]]];
-	[[self layer] insertSublayer:[self diaryGradient] atIndex:3];
+	[[self layer] insertSublayer:[self diaryGradient] atIndex:enableSpotlightSwitch ? 3 : 0];
 
 }
 
