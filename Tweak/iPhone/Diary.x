@@ -1734,23 +1734,24 @@ CSCoverSheetView* coverSheetView = nil;
 
     MRMediaRemoteGetNowPlayingInfo(dispatch_get_main_queue(), ^(CFDictionaryRef information) {
         if (information) {
-            NSDictionary* dict = (__bridge NSDictionary *)information;
-
-            if (dict) {
-                if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
-                    if (artworkTransitionSwitch) {
-                        [UIView transitionWithView:[coverSheetView diaryArtworkView] duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-                            [[coverSheetView diaryArtworkView] setImage:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
-                        } completion:nil];
-                    } else {
-                        [[coverSheetView diaryArtworkView] setImage:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
-                    }
+            if (CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtworkData)) {
+                UIImage *imageToAdd = [UIImage imageWithData:(__bridge NSData*)CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtworkData)];
+                if (artworkTransitionSwitch) {
+                    [UIView transitionWithView:[coverSheetView diaryArtworkView] duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                        [[coverSheetView diaryArtworkView] setImage:imageToAdd];
+                    } completion:nil];
+                } else {
+                    [[coverSheetView diaryArtworkView] setImage:imageToAdd];
                 }
-                if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoTitle]) [[coverSheetView diarySongTitleLabel] setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoTitle]]];
-                if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtist])[[coverSheetView diaryArtistLabel] setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist]]];
-
-                [[coverSheetView diaryPlayerView] setHidden:NO];
+                if (mediaPlayerAlbumBackgroundColor) {
+                    [[coverSheetView diaryPlayerView] setBackgroundColor:getAverageColorOfImage(imageToAdd)];
+                }
             }
+            
+            if (CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoTitle)) [[coverSheetView diarySongTitleLabel] setText:(__bridge NSString*) CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoTitle)];
+            if (CFDictionaryContainsKey(information, kMRMediaRemoteNowPlayingInfoArtist)) [[coverSheetView diaryArtistLabel] setText:(__bridge NSString*) CFDictionaryGetValue(information, kMRMediaRemoteNowPlayingInfoArtist)];
+
+            [[coverSheetView diaryPlayerView] setHidden:NO];
         } else {
             [[coverSheetView diaryPlayerView] setHidden:YES];
         }
@@ -2300,6 +2301,7 @@ CSCoverSheetView* coverSheetView = nil;
     [preferences registerBool:&enableMediaPlayerSwitch default:YES forKey:@"enableMediaPlayer"];
     if (enableMediaPlayerSwitch) {
         [preferences registerBool:&artworkTransitionSwitch default:NO forKey:@"artworkTransition"];
+        [preferences registerBool:&mediaPlayerAlbumBackgroundColor default:NO forKey:@"mediaPlayerAlbumBackgroundColor"];
         [preferences registerObject:&mediaPlayerBackgroundAmountValue default:@"1" forKey:@"mediaPlayerBackgroundAmount"];
         [preferences registerObject:&mediaPlayerOffsetValue default:@"40" forKey:@"mediaPlayerOffset"];
     }
