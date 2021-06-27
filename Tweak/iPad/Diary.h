@@ -84,6 +84,7 @@ BOOL automaticallyFocusTheEntryFieldSwitch = YES;
 
 
 // miscellaneous
+NSString* customZIndexValue = @"0";
 NSString* fontFamilyValue = @"0";
 NSString* notificationOffsetValue = @"0";
 BOOL hideChargingViewSwitch = YES;
