@@ -11,7 +11,7 @@
 			<key>label</key>
 			<string>Z index</string>
 			<key>footerText</key>
-			<string>Increase this can fix tweak compatibility issues</string>
+			<string>Increasing this can fix tweak compatibility issues</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
