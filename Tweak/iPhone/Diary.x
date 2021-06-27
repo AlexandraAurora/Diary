@@ -412,7 +412,7 @@ CSCoverSheetView* coverSheetView = nil;
 	// diary view
 	self.diaryView = [UIView new];
 	[[self diaryView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	[self insertSubview:[self diaryView] atIndex:[customZIndexValue intValue]];
+	[self insertSubview:[self diaryView] atIndex:useCustomZIndexSwitch ? [customZIndexValue intValue] : 0];
 
     [[self diaryView] setTranslatesAutoresizingMaskIntoConstraints:NO];
 	[NSLayoutConstraint activateConstraints:@[
@@ -1830,7 +1830,7 @@ CSCoverSheetView* coverSheetView = nil;
 	self.diaryGradient = [CAGradientLayer layer];
 	[[self diaryGradient] setFrame:[self bounds]];
 	[[self diaryGradient] setColors:@[(id)[[UIColor clearColor] CGColor], (id)[[UIColor clearColor] CGColor], (id)[[[UIColor blackColor] colorWithAlphaComponent:[backgroundGradientAmountValue doubleValue]] CGColor]]];
-	[[self layer] insertSublayer:[self diaryGradient] atIndex:enableSpotlightSwitch ? 3 : 1 + [customZIndexValue intValue]];
+	[[self layer] insertSublayer:[self diaryGradient] atIndex:enableSpotlightSwitch ? 3 : useCustomZIndexSwitch ? 1 + [customZIndexValue intValue] : 0];
 
 }
 
@@ -2321,6 +2321,7 @@ CSCoverSheetView* coverSheetView = nil;
     }
 
     // miscellaneous
+    [preferences registerBool:&useCustomZIndexSwitch default:NO forKey:@"useCustomZIndex"];
     [preferences registerObject:&customZIndexValue default:@"0" forKey:@"customZIndex"];
     [preferences registerObject:&fontFamilyValue default:@"0" forKey:@"fontFamily"];
     [preferences registerObject:&notificationOffsetValue default:@"0" forKey:@"notificationOffset"];

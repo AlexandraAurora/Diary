@@ -85,6 +85,7 @@ BOOL automaticallyFocusTheEntryFieldSwitch = YES;
 
 
 // miscellaneous
+BOOL useCustomZIndexSwitch = NO;
 NSString* customZIndexValue = @"0";
 NSString* fontFamilyValue = @"0";
 NSString* notificationOffsetValue = @"0";
