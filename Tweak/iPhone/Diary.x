@@ -2151,7 +2151,7 @@ CSCoverSheetView* coverSheetView = nil;
 }
 
 %new
-- (void)hideIncorrectPasswordView { // show the incorrect password view
+- (void)hideIncorrectPasswordView { // hide the incorrect password view
 
     [[self passcodeEntryField] setText:@""];
     [[self passcodeEntryField] becomeFirstResponder];
@@ -2191,7 +2191,7 @@ CSCoverSheetView* coverSheetView = nil;
 
 %hook SBDashBoardBiometricUnlockController
 
-- (void)setAuthenticated:(BOOL)arg1 { // play authenticated animation when unlocked with biometrics
+- (void)setAuthenticated:(BOOL)arg1 { // automatically unlock when authenticated with biometrics
 
 	%orig;
 
