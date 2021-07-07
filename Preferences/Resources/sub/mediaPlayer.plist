@@ -47,7 +47,25 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Background opacity</string>
+			<string>Background</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>key</key>
+			<string>adaptiveMediaPlayerBackground</string>
+			<key>label</key>
+			<string>Adaptive background color</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Opacity</string>
 		</dict>
 		<dict>
 			<key>cell</key>

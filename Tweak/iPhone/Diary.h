@@ -6,6 +6,7 @@
 #import <MediaRemote/MediaRemote.h>
 #import "GcUniversal/GcImagePickerUtils.h"
 #import "GcUniversal/GcColorPickerUtils.h"
+#import <Kitten/libKitten.h>
 #import "../DRYLocalization.h"
 #import <Cephei/HBPreferences.h>
 
@@ -52,6 +53,7 @@ BOOL isTimerRunning = NO;
 // media player
 BOOL enableMediaPlayerSwitch = YES;
 BOOL artworkTransitionSwitch = NO;
+BOOL adaptiveMediaPlayerBackgroundSwitch = NO;
 NSString* mediaPlayerBackgroundAmountValue = @"1";
 NSString* mediaPlayerOffsetValue = @"40";
 

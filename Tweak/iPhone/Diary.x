@@ -1754,13 +1754,15 @@ CSCoverSheetView* coverSheetView = nil;
 
             if (dict) {
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtworkData]) {
+                    UIImage* artwork = [UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]];
                     if (artworkTransitionSwitch) {
                         [UIView transitionWithView:[coverSheetView diaryArtworkView] duration:0.2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-                            [[coverSheetView diaryArtworkView] setImage:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+                            [[coverSheetView diaryArtworkView] setImage:artwork];
                         } completion:nil];
                     } else {
-                        [[coverSheetView diaryArtworkView] setImage:[UIImage imageWithData:[dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtworkData]]];
+                        [[coverSheetView diaryArtworkView] setImage:artwork];
                     }
+                    if (adaptiveMediaPlayerBackgroundSwitch) [[coverSheetView diaryPlayerView] setBackgroundColor:[libKitten backgroundColor:artwork]];
                 }
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoTitle]) [[coverSheetView diarySongTitleLabel] setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoTitle]]];
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtist])[[coverSheetView diaryArtistLabel] setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist]]];
@@ -2319,6 +2321,7 @@ CSCoverSheetView* coverSheetView = nil;
     [preferences registerBool:&enableMediaPlayerSwitch default:YES forKey:@"enableMediaPlayer"];
     if (enableMediaPlayerSwitch) {
         [preferences registerBool:&artworkTransitionSwitch default:NO forKey:@"artworkTransition"];
+        [preferences registerBool:&adaptiveMediaPlayerBackgroundSwitch default:NO forKey:@"adaptiveMediaPlayerBackground"];
         [preferences registerObject:&mediaPlayerBackgroundAmountValue default:@"1" forKey:@"mediaPlayerBackgroundAmount"];
         [preferences registerObject:&mediaPlayerOffsetValue default:@"40" forKey:@"mediaPlayerOffset"];
     }
