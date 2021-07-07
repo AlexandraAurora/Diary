@@ -470,8 +470,8 @@ CSCoverSheetView* coverSheetView = nil;
             self.diaryCalendarButton = [UIButton new];
             [[self diaryCalendarButton] addTarget:self action:@selector(fetchNextCalendarEvent) forControlEvents:UIControlEventTouchUpInside];
             [[self diaryCalendarButton] setContentMode:UIViewContentModeScaleAspectFit];
-            [[self diaryCalendarButton] setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/events/calendar.png"] forState:UIControlStateNormal];
-            [[self diaryCalendarButton] setTintColor:[UIColor whiteColor]];
+            [[self diaryCalendarButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/events/calendar.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+            [[self diaryCalendarButton] setTintColor:[GcColorPickerUtils colorWithHex:upNextColorValue]];
             [self addSubview:[self diaryCalendarButton]];
 
             [[self diaryCalendarButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -489,8 +489,8 @@ CSCoverSheetView* coverSheetView = nil;
             self.diaryReminderButton = [UIButton new];
             [[self diaryReminderButton] addTarget:self action:@selector(fetchNextReminder) forControlEvents:UIControlEventTouchUpInside];
             [[self diaryReminderButton] setContentMode:UIViewContentModeScaleAspectFit];
-            [[self diaryReminderButton] setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/events/reminder.png"] forState:UIControlStateNormal];
-            [[self diaryReminderButton] setTintColor:[UIColor whiteColor]];
+            [[self diaryReminderButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/events/reminder.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+            [[self diaryReminderButton] setTintColor:[GcColorPickerUtils colorWithHex:upNextColorValue]];
             [self addSubview:[self diaryReminderButton]];
 
             [[self diaryReminderButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -517,8 +517,8 @@ CSCoverSheetView* coverSheetView = nil;
             self.diaryAlarmButton = [UIButton new];
             [[self diaryAlarmButton] addTarget:self action:@selector(fetchNextAlarm) forControlEvents:UIControlEventTouchUpInside];
             [[self diaryAlarmButton] setContentMode:UIViewContentModeScaleAspectFit];
-            [[self diaryAlarmButton] setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/events/alarm.png"] forState:UIControlStateNormal];
-            [[self diaryAlarmButton] setTintColor:[UIColor whiteColor]];
+            [[self diaryAlarmButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/events/alarm.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+            [[self diaryAlarmButton] setTintColor:[GcColorPickerUtils colorWithHex:upNextColorValue]];
             [self addSubview:[self diaryAlarmButton]];
 
             [[self diaryAlarmButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -551,7 +551,7 @@ CSCoverSheetView* coverSheetView = nil;
     if (enableUpNextSwitch || showWeatherSwitch) {
         // event subtitle label
         self.diaryEventSubtitleLabel = [UILabel new];
-        [[self diaryEventSubtitleLabel] setTextColor:[UIColor whiteColor]];
+        [[self diaryEventSubtitleLabel] setTextColor:[GcColorPickerUtils colorWithHex:upNextColorValue]];
         if ([fontFamilyValue intValue] == 0) [[self diaryEventSubtitleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:20]];
         else if ([fontFamilyValue intValue] == 1) [[self diaryEventSubtitleLabel] setFont:[UIFont systemFontOfSize:20 weight:UIFontWeightRegular]];
         [[self diaryEventSubtitleLabel] setTextAlignment:NSTextAlignmentLeft];
@@ -573,7 +573,7 @@ CSCoverSheetView* coverSheetView = nil;
 
         // event title label
         self.diaryEventTitleLabel = [UILabel new];
-        [[self diaryEventTitleLabel] setTextColor:[UIColor whiteColor]];
+        [[self diaryEventTitleLabel] setTextColor:[GcColorPickerUtils colorWithHex:upNextColorValue]];
         if ([fontFamilyValue intValue] == 0) [[self diaryEventTitleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:20]];
         else if ([fontFamilyValue intValue] == 1) [[self diaryEventTitleLabel] setFont:[UIFont systemFontOfSize:20 weight:UIFontWeightRegular]];
         [[self diaryEventTitleLabel] setTextAlignment:NSTextAlignmentLeft];
@@ -589,7 +589,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     // date label
     self.diaryDateLabel = [UILabel new];
-    [[self diaryDateLabel] setTextColor:[UIColor whiteColor]];
+    [[self diaryDateLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
     if ([fontFamilyValue intValue] == 0) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:40]];
     else if ([fontFamilyValue intValue] == 1) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:40 weight:UIFontWeightRegular]];
     [[self diaryDateLabel] setTextAlignment:NSTextAlignmentLeft];
@@ -598,7 +598,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     // time label
     self.diaryTimeLabel = [UILabel new];
-    [[self diaryTimeLabel] setTextColor:[UIColor whiteColor]];
+    [[self diaryTimeLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
     if ([fontFamilyValue intValue] == 0) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"Selawik-Light" size:105]];
     else if ([fontFamilyValue intValue] == 1) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:105 weight:UIFontWeightLight]];
     [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentLeft];
@@ -627,7 +627,7 @@ CSCoverSheetView* coverSheetView = nil;
         // battery percentage label
         if (showBatteryPercentageSwitch) {
             self.diaryBatteryPercentageLabel = [UILabel new];
-            [[self diaryBatteryPercentageLabel] setTextColor:[UIColor whiteColor]];
+            [[self diaryBatteryPercentageLabel] setTextColor:[GcColorPickerUtils colorWithHex:connectivityColorValue]];
             if ([fontFamilyValue intValue] == 0) [[self diaryBatteryPercentageLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:6]];
             else if ([fontFamilyValue intValue] == 1) [[self diaryBatteryPercentageLabel] setFont:[UIFont systemFontOfSize:6 weight:UIFontWeightRegular]];
             [[self diaryBatteryPercentageLabel] setTextAlignment:NSTextAlignmentLeft];
@@ -705,7 +705,7 @@ CSCoverSheetView* coverSheetView = nil;
         // cellular type label
         if (showCellularTypeSwitch) {
             self.diaryCellularTypeLabel = [UILabel new];
-            [[self diaryCellularTypeLabel] setTextColor:[UIColor whiteColor]];
+            [[self diaryCellularTypeLabel] setTextColor:[GcColorPickerUtils colorWithHex:connectivityColorValue]];
             if ([fontFamilyValue intValue] == 0) [[self diaryCellularTypeLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:6]];
             else if ([fontFamilyValue intValue] == 1) [[self diaryCellularTypeLabel] setFont:[UIFont systemFontOfSize:6 weight:UIFontWeightRegular]];
             [[self diaryCellularTypeLabel] setTextAlignment:NSTextAlignmentLeft];
@@ -1232,6 +1232,8 @@ CSCoverSheetView* coverSheetView = nil;
             else if (orig >= 91 && orig <= 100) [[coverSheetView diaryBatteryIcon] setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/battery/charging/charging91-100.png"]];
         }
 
+        coverSheetView.diaryBatteryIcon.image = [[[coverSheetView diaryBatteryIcon] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [[coverSheetView diaryBatteryIcon] setTintColor:[GcColorPickerUtils colorWithHex:connectivityColorValue]];
         if (showBatteryPercentageSwitch) [[coverSheetView diaryBatteryPercentageLabel] setText:[NSString stringWithFormat:@"%i%@", orig, @"%"]];
     });
 
@@ -1267,6 +1269,11 @@ CSCoverSheetView* coverSheetView = nil;
             [[coverSheetView diaryWifiIcon] setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/connectivity/airplane.png"]];
             [[coverSheetView diaryCellularIcon] setHidden:YES];
         }
+
+        coverSheetView.diaryWifiIcon.image = [[[coverSheetView diaryWifiIcon] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        coverSheetView.diaryCellularIcon.image = [[[coverSheetView diaryCellularIcon] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [[coverSheetView diaryWifiIcon] setTintColor:[GcColorPickerUtils colorWithHex:connectivityColorValue]];
+        [[coverSheetView diaryCellularIcon] setTintColor:[GcColorPickerUtils colorWithHex:connectivityColorValue]];
     });
 
     return strength;
@@ -1290,6 +1297,8 @@ CSCoverSheetView* coverSheetView = nil;
         else if (strength == 2) [[coverSheetView diaryCellularIcon] setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/connectivity/cellular2.png"]];
         else if (strength == 3) [[coverSheetView diaryCellularIcon] setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/connectivity/cellular3.png"]];
         else if (strength == 4) [[coverSheetView diaryCellularIcon] setImage:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/connectivity/cellular4.png"]];
+        coverSheetView.diaryCellularIcon.image = [[[coverSheetView diaryCellularIcon] image] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [[coverSheetView diaryCellularIcon] setTintColor:[GcColorPickerUtils colorWithHex:connectivityColorValue]];
 
         if (showCellularTypeSwitch) {
             CTTelephonyNetworkInfo* telephonyInfo = [CTTelephonyNetworkInfo new];
@@ -1821,7 +1830,7 @@ CSCoverSheetView* coverSheetView = nil;
     if ([self diaryGradient] || [backgroundGradientAmountValue doubleValue] == 0) return;
 	self.diaryGradient = [CAGradientLayer layer];
 	[[self diaryGradient] setFrame:[self bounds]];
-	[[self diaryGradient] setColors:@[(id)[[UIColor clearColor] CGColor], (id)[[UIColor clearColor] CGColor], (id)[[[UIColor blackColor] colorWithAlphaComponent:[backgroundGradientAmountValue doubleValue]] CGColor]]];
+	[[self diaryGradient] setColors:@[(id)[[UIColor clearColor] CGColor], (id)[[UIColor clearColor] CGColor], (id)[[[GcColorPickerUtils colorWithHex:gradientColorValue] colorWithAlphaComponent:[backgroundGradientAmountValue doubleValue]] CGColor]]];
 	[[self layer] insertSublayer:[self diaryGradient] atIndex:enableSpotlightSwitch ? 3 : useCustomZIndexSwitch ? 1 + [customZIndexValue intValue] : 0];
 
 }
@@ -2282,6 +2291,9 @@ CSCoverSheetView* coverSheetView = nil;
         [preferences registerBool:&slideUpToUnlockSwitch default:NO forKey:@"slideUpToUnlock"];
         [preferences registerBool:&bounceOnTapSwitch default:NO forKey:@"bounceOnTap"];
         if (slideUpToUnlockSwitch || bounceOnTapSwitch) [preferences registerObject:&slideUpToUnlockPositionValue default:@"0" forKey:@"slideUpToUnlockPosition"];
+        [preferences registerObject:&timeDateColorValue default:@"FFFFFF" forKey:@"timeDateColor"];
+        [preferences registerObject:&upNextColorValue default:@"FFFFFF" forKey:@"upNextColor"];
+        [preferences registerObject:&connectivityColorValue default:@"FFFFFF" forKey:@"connectivityColor"];
     }
 
     // hello
@@ -2299,6 +2311,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     // background
     [preferences registerBool:&enableSpotlightSwitch default:NO forKey:@"enableSpotlight"];
+    [preferences registerObject:&gradientColorValue default:@"000000" forKey:@"gradientColor"];
     [preferences registerObject:&backgroundGradientAmountValue default:@"0.6" forKey:@"backgroundGradientAmount"];
 
     // passcode

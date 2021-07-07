@@ -5,6 +5,7 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <MediaRemote/MediaRemote.h>
 #import "GcUniversal/GcImagePickerUtils.h"
+#import "GcUniversal/GcColorPickerUtils.h"
 #import "../DRYLocalization.h"
 #import <Cephei/HBPreferences.h>
 
@@ -37,6 +38,9 @@ BOOL showCellularTypeSwitch = NO;
 BOOL slideUpToUnlockSwitch = NO;
 BOOL bounceOnTapSwitch = NO;
 NSString* slideUpToUnlockPositionValue = @"0";
+NSString* timeDateColorValue = @"FFFFFF";
+NSString* upNextColorValue = @"FFFFFF";
+NSString* connectivityColorValue = @"FFFFFF";
 
 NSTimer* timeAndDateTimer = nil;
 CAGradientLayer* notificationMask = nil;
@@ -70,6 +74,7 @@ BOOL isScreenOnHello = YES;
 
 // background
 BOOL enableSpotlightSwitch = NO;
+NSString* gradientColorValue = @"000000";
 NSString* backgroundGradientAmountValue = @"0.6";
 
 NSMutableArray* spotlightWallpapers = nil;

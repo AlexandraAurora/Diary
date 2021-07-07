@@ -32,7 +32,29 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Gradient opacity</string>
+			<string>Gradient</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>GcColorPickerCell</string>
+			<key>label</key>
+			<string>Gradient color:</string>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>key</key>
+			<string>gradientColor</string>
+			<key>supportsAlpha</key>
+			<false/>
+			<key>fallback</key>
+			<string>000000</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Opacity</string>
 		</dict>
 		<dict>
 			<key>cell</key>
