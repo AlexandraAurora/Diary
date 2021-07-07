@@ -63,6 +63,22 @@
 		</dict>
 		<dict>
 			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>GcColorPickerCell</string>
+			<key>label</key>
+			<string>Custom background color:</string>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>key</key>
+			<string>customMediaPlayerBackgroundColor</string>
+			<key>supportsAlpha</key>
+			<false/>
+			<key>fallback</key>
+			<string>1A1A1A</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
 			<string>Opacity</string>

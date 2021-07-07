@@ -1572,7 +1572,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     // player view
     self.diaryPlayerView = [UIView new];
-    [[self diaryPlayerView] setBackgroundColor:[UIColor colorWithRed:0.10 green:0.10 blue:0.10 alpha:[mediaPlayerBackgroundAmountValue doubleValue]]];
+    [[self diaryPlayerView] setBackgroundColor:[[GcColorPickerUtils colorWithHex:customMediaPlayerBackgroundColorValue] colorWithAlphaComponent:[mediaPlayerBackgroundAmountValue doubleValue]]];
     [[self diaryPlayerView] setHidden:YES];
     [self addSubview:[self diaryPlayerView]];
 
@@ -2322,6 +2322,7 @@ CSCoverSheetView* coverSheetView = nil;
     if (enableMediaPlayerSwitch) {
         [preferences registerBool:&artworkTransitionSwitch default:NO forKey:@"artworkTransition"];
         [preferences registerBool:&adaptiveMediaPlayerBackgroundSwitch default:NO forKey:@"adaptiveMediaPlayerBackground"];
+        [preferences registerObject:&customMediaPlayerBackgroundColorValue default:@"1A1A1A" forKey:@"customMediaPlayerBackgroundColor"];
         [preferences registerObject:&mediaPlayerBackgroundAmountValue default:@"1" forKey:@"mediaPlayerBackgroundAmount"];
         [preferences registerObject:&mediaPlayerOffsetValue default:@"40" forKey:@"mediaPlayerOffset"];
     }

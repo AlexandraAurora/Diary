@@ -54,6 +54,7 @@ BOOL isTimerRunning = NO;
 BOOL enableMediaPlayerSwitch = YES;
 BOOL artworkTransitionSwitch = NO;
 BOOL adaptiveMediaPlayerBackgroundSwitch = NO;
+NSString* customMediaPlayerBackgroundColorValue = @"1A1A1A";
 NSString* mediaPlayerBackgroundAmountValue = @"1";
 NSString* mediaPlayerOffsetValue = @"40";
 
