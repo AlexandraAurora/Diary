@@ -48,7 +48,7 @@
 			<key>cell</key>
 			<string>PSSegmentCell</string>
 			<key>default</key>
-			<integer>0</integer>
+			<integer>1</integer>
 			<key>defaults</key>
 			<string>love.litten.diarypreferences</string>
 			<key>key</key>
