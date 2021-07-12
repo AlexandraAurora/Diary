@@ -26,7 +26,7 @@
 			<key>label</key>
 			<string>Settings</string>
 			<key>footerText</key>
-			<string>Most changes require a respring</string>
+			<string>Most changes require a respring, some immediately</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>

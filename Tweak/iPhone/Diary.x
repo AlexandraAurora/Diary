@@ -623,10 +623,17 @@ CSCoverSheetView* coverSheetView = nil;
                 [self.diaryEventSubtitleLabel.bottomAnchor constraintEqualToAnchor:self.diaryView.bottomAnchor constant:-72],
             ]];
         } else if (!enableUpNextSwitch || (!showCalendarEventButtonSwitch && !showReminderButtonSwitch && !showAlarmButtonSwitch)) {
-            [NSLayoutConstraint activateConstraints:@[
-                [self.diaryEventSubtitleLabel.leadingAnchor constraintEqualToAnchor:self.diaryView.leadingAnchor constant:16],
-                [self.diaryEventSubtitleLabel.bottomAnchor constraintEqualToAnchor:self.diaryView.bottomAnchor constant:-56],
-            ]];
+            if ([overrideTimeDateStyleValue intValue] == 0) {
+                [NSLayoutConstraint activateConstraints:@[
+                    [self.diaryEventSubtitleLabel.leadingAnchor constraintEqualToAnchor:self.diaryView.leadingAnchor constant:16],
+                    [self.diaryEventSubtitleLabel.bottomAnchor constraintEqualToAnchor:self.diaryView.bottomAnchor constant:-56],
+                ]];
+            } else if ([overrideTimeDateStyleValue intValue] == 1) {
+                [NSLayoutConstraint activateConstraints:@[
+                    [self.diaryEventSubtitleLabel.leadingAnchor constraintEqualToAnchor:self.diaryView.leadingAnchor constant:16],
+                    [self.diaryEventSubtitleLabel.bottomAnchor constraintEqualToAnchor:self.diaryView.bottomAnchor constant:-29],
+                ]];
+            }
         }
 
 
@@ -1221,7 +1228,6 @@ CSCoverSheetView* coverSheetView = nil;
 	%orig;
 
     if (![[%c(SBLockScreenManager) sharedInstance] isLockScreenVisible] || isScreenOnTimeAndDate) return; // this method gets called not only when the screen gets turned on, so i verify that it was turned on by checking if the lock screen is visible
-    if ([overrideTimeDateStyleValue intValue] == 1) [coverSheetView layoutTimeAndDate];
 	[self requestDiaryTimeAndDateUpdate];
     if (enableUpNextSwitch && [coverSheetView diaryView]) {
         if ([defaultEventsValue intValue] == 0) [coverSheetView fetchNextCalendarEvent];
