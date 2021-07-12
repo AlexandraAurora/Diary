@@ -40,7 +40,7 @@
 			<key>label</key>
 			<string>Font family</string>
 			<key>footerText</key>
-			<string>I couldn't add the original Windows 10 font (SegoeUI) due to its license, Selawik is Microsoft's free alternative to SegoeUI</string>
+			<string>I couldn't add the original Windows 10 font (SegoeUI) due to its license, Selawik is Microsoft's free alternative to SegoeUI and Open Sans looks similar</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
@@ -57,14 +57,16 @@
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
+				<integer>2</integer>
 			</array>
 			<key>validTitles</key>
 			<array>
 				<string>Selawik</string>
+				<string>Open Sans</string>
 				<string>System</string>
 			</array>
 			<key>alignment</key>
-			<string>2</string>
+			<string>3</string>
 		</dict>
 
 		<dict>

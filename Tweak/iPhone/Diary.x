@@ -15,8 +15,8 @@ CSCoverSheetView* coverSheetView = nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFrameAfterRotation) name:@"diaryRotateNotification" object:nil];
 
     if ([fontFamilyValue intValue] == 0) {
-        // load selawik regular font
-        NSData* inData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/DiaryPreferences.bundle/fonts/selawk.ttf"]];
+        // load selawik light font
+        NSData* inData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/DiaryPreferences.bundle/fonts/selawkl.ttf"]];
         CFErrorRef error;
         CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)inData);
         CGFontRef font = CGFontCreateWithDataProvider(provider);
@@ -27,8 +27,32 @@ CSCoverSheetView* coverSheetView = nil;
         CFRelease(font);
         CFRelease(provider);
 
-        // load selawik light font
-        NSData* inData2 = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/DiaryPreferences.bundle/fonts/selawkl.ttf"]];
+        // load selawik regular font
+        NSData* inData2 = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/DiaryPreferences.bundle/fonts/selawk.ttf"]];
+        CFErrorRef error2;
+        CGDataProviderRef provider2 = CGDataProviderCreateWithCFData((CFDataRef)inData2);
+        CGFontRef font2 = CGFontCreateWithDataProvider(provider2);
+        if (!CTFontManagerRegisterGraphicsFont(font2, &error2)) {
+            CFStringRef errorDescription2 = CFErrorCopyDescription(error2);
+            CFRelease(errorDescription2);
+        }
+        CFRelease(font2);
+        CFRelease(provider2);
+    } else if ([fontFamilyValue intValue] == 1) {
+        // load open sans light font
+        NSData* inData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/DiaryPreferences.bundle/fonts/OpenSans-Light.ttf"]];
+        CFErrorRef error;
+        CGDataProviderRef provider = CGDataProviderCreateWithCFData((CFDataRef)inData);
+        CGFontRef font = CGFontCreateWithDataProvider(provider);
+        if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+            CFStringRef errorDescription = CFErrorCopyDescription(error);
+            CFRelease(errorDescription);
+        }
+        CFRelease(font);
+        CFRelease(provider);
+
+        // load open sans regular font
+        NSData* inData2 = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/DiaryPreferences.bundle/fonts/OpenSans-Regular.ttf"]];
         CFErrorRef error2;
         CGDataProviderRef provider2 = CGDataProviderCreateWithCFData((CFDataRef)inData2);
         CGFontRef font2 = CGFontCreateWithDataProvider(provider2);
@@ -566,7 +590,7 @@ CSCoverSheetView* coverSheetView = nil;
         self.diaryEventSubtitleLabel = [UILabel new];
         [[self diaryEventSubtitleLabel] setTextColor:[GcColorPickerUtils colorWithHex:upNextColorValue]];
         if ([fontFamilyValue intValue] == 0) [[self diaryEventSubtitleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:18]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryEventSubtitleLabel] setFont:[UIFont systemFontOfSize:18 weight:UIFontWeightRegular]];
+        else if ([fontFamilyValue intValue] == 2) [[self diaryEventSubtitleLabel] setFont:[UIFont systemFontOfSize:18 weight:UIFontWeightRegular]];
         [[self diaryEventSubtitleLabel] setTextAlignment:NSTextAlignmentLeft];
         [[self diaryView] addSubview:[self diaryEventSubtitleLabel]];
 
@@ -588,7 +612,7 @@ CSCoverSheetView* coverSheetView = nil;
         self.diaryEventTitleLabel = [UILabel new];
         [[self diaryEventTitleLabel] setTextColor:[GcColorPickerUtils colorWithHex:upNextColorValue]];
         if ([fontFamilyValue intValue] == 0) [[self diaryEventTitleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:18]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryEventTitleLabel] setFont:[UIFont systemFontOfSize:18 weight:UIFontWeightRegular]];
+        else if ([fontFamilyValue intValue] == 2) [[self diaryEventTitleLabel] setFont:[UIFont systemFontOfSize:18 weight:UIFontWeightRegular]];
         [[self diaryEventTitleLabel] setTextAlignment:NSTextAlignmentLeft];
         [[self diaryView] addSubview:[self diaryEventTitleLabel]];
 
@@ -604,7 +628,7 @@ CSCoverSheetView* coverSheetView = nil;
     self.diaryDateLabel = [UILabel new];
     [[self diaryDateLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
     if ([fontFamilyValue intValue] == 0) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:28]];
-    else if ([fontFamilyValue intValue] == 1) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:28 weight:UIFontWeightRegular]];
+    else if ([fontFamilyValue intValue] == 2) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:28 weight:UIFontWeightRegular]];
     [[self diaryDateLabel] setTextAlignment:NSTextAlignmentLeft];
 
         
@@ -612,7 +636,7 @@ CSCoverSheetView* coverSheetView = nil;
     self.diaryTimeLabel = [UILabel new];
     [[self diaryTimeLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
     if ([fontFamilyValue intValue] == 0) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"Selawik-Light" size:78]];
-    else if ([fontFamilyValue intValue] == 1) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:78 weight:UIFontWeightLight]];
+    else if ([fontFamilyValue intValue] == 2) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:78 weight:UIFontWeightLight]];
     [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentLeft];
 
 
@@ -640,7 +664,7 @@ CSCoverSheetView* coverSheetView = nil;
             self.diaryBatteryPercentageLabel = [UILabel new];
             [[self diaryBatteryPercentageLabel] setTextColor:[GcColorPickerUtils colorWithHex:connectivityColorValue]];
             if ([fontFamilyValue intValue] == 0) [[self diaryBatteryPercentageLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:6]];
-            else if ([fontFamilyValue intValue] == 1) [[self diaryBatteryPercentageLabel] setFont:[UIFont systemFontOfSize:6 weight:UIFontWeightRegular]];
+            else if ([fontFamilyValue intValue] == 2) [[self diaryBatteryPercentageLabel] setFont:[UIFont systemFontOfSize:6 weight:UIFontWeightRegular]];
             [[self diaryBatteryPercentageLabel] setTextAlignment:NSTextAlignmentLeft];
             [[self diaryBatteryIcon] addSubview:[self diaryBatteryPercentageLabel]];
 
@@ -718,7 +742,7 @@ CSCoverSheetView* coverSheetView = nil;
             self.diaryCellularTypeLabel = [UILabel new];
             [[self diaryCellularTypeLabel] setTextColor:[GcColorPickerUtils colorWithHex:connectivityColorValue]];
             if ([fontFamilyValue intValue] == 0) [[self diaryCellularTypeLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:6]];
-            else if ([fontFamilyValue intValue] == 1) [[self diaryCellularTypeLabel] setFont:[UIFont systemFontOfSize:6 weight:UIFontWeightRegular]];
+            else if ([fontFamilyValue intValue] == 2) [[self diaryCellularTypeLabel] setFont:[UIFont systemFontOfSize:6 weight:UIFontWeightRegular]];
             [[self diaryCellularTypeLabel] setTextAlignment:NSTextAlignmentLeft];
             [[self diaryCellularIcon] addSubview:[self diaryCellularTypeLabel]];
 
@@ -1335,7 +1359,7 @@ CSCoverSheetView* coverSheetView = nil;
         self.diaryHelloLabel = [UILabel new];
         [[self diaryHelloLabel] setTextColor:[UIColor whiteColor]];
         if ([fontFamilyValue intValue] == 0) [[self diaryHelloLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:24]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryHelloLabel] setFont:[UIFont systemFontOfSize:24 weight:UIFontWeightRegular]];
+        else if ([fontFamilyValue intValue] == 2) [[self diaryHelloLabel] setFont:[UIFont systemFontOfSize:24 weight:UIFontWeightRegular]];
         [[self diaryHelloLabel] setText:greetingValue];
         [[self diaryHelloLabel] setTextAlignment:NSTextAlignmentCenter];
         [[self diaryHelloLabel] setAlpha:0];
@@ -1671,7 +1695,7 @@ CSCoverSheetView* coverSheetView = nil;
     self.diaryArtistLabel = [UILabel new];
     [[self diaryArtistLabel] setTextColor:[UIColor whiteColor]];
     if ([fontFamilyValue intValue] == 0) [[self diaryArtistLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:17]];
-    else if ([fontFamilyValue intValue] == 1) [[self diaryArtistLabel] setFont:[UIFont systemFontOfSize:17 weight:UIFontWeightRegular]];
+    else if ([fontFamilyValue intValue] == 2) [[self diaryArtistLabel] setFont:[UIFont systemFontOfSize:17 weight:UIFontWeightRegular]];
     [[self diaryArtistLabel] setTextAlignment:NSTextAlignmentLeft];
     [[self diaryArtistLabel] setMarqueeEnabled:YES];
     [[self diaryArtistLabel] setMarqueeRunning:YES];
@@ -1689,7 +1713,7 @@ CSCoverSheetView* coverSheetView = nil;
     self.diarySongTitleLabel = [UILabel new];
     [[self diarySongTitleLabel] setTextColor:[UIColor whiteColor]];
     if ([fontFamilyValue intValue] == 0) [[self diarySongTitleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:23]];
-    else if ([fontFamilyValue intValue] == 1) [[self diarySongTitleLabel] setFont:[UIFont systemFontOfSize:23 weight:UIFontWeightRegular]];
+    else if ([fontFamilyValue intValue] == 2) [[self diarySongTitleLabel] setFont:[UIFont systemFontOfSize:23 weight:UIFontWeightRegular]];
     [[self diarySongTitleLabel] setTextAlignment:NSTextAlignmentLeft];
     [[self diarySongTitleLabel] setMarqueeEnabled:YES];
     [[self diarySongTitleLabel] setMarqueeRunning:YES];
@@ -1922,10 +1946,10 @@ CSCoverSheetView* coverSheetView = nil;
     [[self usernameLabel] setText:usernameValue];
     if ([overrideStyleValue intValue] == 0) {
         if ([fontFamilyValue intValue] == 0) [[self usernameLabel] setFont:[UIFont fontWithName:@"Selawik-Light" size:40]];
-        else if ([fontFamilyValue intValue] == 1) [[self usernameLabel] setFont:[UIFont systemFontOfSize:40 weight:UIFontWeightLight]];
+        else if ([fontFamilyValue intValue] == 2) [[self usernameLabel] setFont:[UIFont systemFontOfSize:40 weight:UIFontWeightLight]];
     } else if ([overrideStyleValue intValue] == 1) {
         if ([fontFamilyValue intValue] == 0) [[self usernameLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:32]];
-        else if ([fontFamilyValue intValue] == 1) [[self usernameLabel] setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightMedium]];
+        else if ([fontFamilyValue intValue] == 2) [[self usernameLabel] setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightMedium]];
     }
     [[self usernameLabel] setAlpha:0];
     [[self view] addSubview:[self usernameLabel]];
@@ -2017,7 +2041,7 @@ CSCoverSheetView* coverSheetView = nil;
         if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
         else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
         if ([fontFamilyValue intValue] == 0) [[self passcodeEntryField] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
-        else if ([fontFamilyValue intValue] == 1) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
+        else if ([fontFamilyValue intValue] == 2) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
         if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1 || [passcodeTypeValue intValue] == 3) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
         [[self passcodeEntryField] setSecureTextEntry:YES];
         [[self passcodeEntryView] addSubview:[self passcodeEntryField]];
@@ -2091,7 +2115,7 @@ CSCoverSheetView* coverSheetView = nil;
         if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
         else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
         if ([fontFamilyValue intValue] == 0) [[self passcodeEntryField] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
-        else if ([fontFamilyValue intValue] == 1) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
+        else if ([fontFamilyValue intValue] == 2) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
         if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1 || [passcodeTypeValue intValue] == 3) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
         [[self passcodeEntryField] setSecureTextEntry:YES];
         [[self passcodeEntryView] addSubview:[self passcodeEntryField]];
@@ -2125,7 +2149,7 @@ CSCoverSheetView* coverSheetView = nil;
     if ([[DRYLocalization stringForKey:@"INCORRECT_PASSWORD"] isEqual:nil]) [[self incorrectPasswordLabel] setText:@"The password is incorrect. Try again."];
     else if (![[DRYLocalization stringForKey:@"INCORRECT_PASSWORD"] isEqual:nil]) [[self incorrectPasswordLabel] setText:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"INCORRECT_PASSWORD"]]];
     if ([fontFamilyValue intValue] == 0) [[self incorrectPasswordLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:14]];
-    else if ([fontFamilyValue intValue] == 1) [[self incorrectPasswordLabel] setFont:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular]];
+    else if ([fontFamilyValue intValue] == 2) [[self incorrectPasswordLabel] setFont:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular]];
     [[self incorrectPasswordLabel] setHidden:YES];
     [[self view] addSubview:[self incorrectPasswordLabel]];
 
@@ -2143,7 +2167,7 @@ CSCoverSheetView* coverSheetView = nil;
         if ([[DRYLocalization stringForKey:@"OK"] isEqual:nil]) [[self incorrectPasswordButton] setTitle:@"OK" forState:UIControlStateNormal];
         else if (![[DRYLocalization stringForKey:@"OK"] isEqual:nil]) [[self incorrectPasswordButton] setTitle:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"OK"]] forState:UIControlStateNormal];
         if ([fontFamilyValue intValue] == 0) [[[self incorrectPasswordButton] titleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
-        else if ([fontFamilyValue intValue] == 1) [[[self incorrectPasswordButton] titleLabel] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
+        else if ([fontFamilyValue intValue] == 2) [[[self incorrectPasswordButton] titleLabel] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
         [[self incorrectPasswordButton] setTintColor:[UIColor whiteColor]];
         [[self incorrectPasswordButton] setBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.3]];
         [[[self incorrectPasswordButton] layer] setBorderColor:[[UIColor whiteColor] CGColor]];
@@ -2164,7 +2188,7 @@ CSCoverSheetView* coverSheetView = nil;
         if ([[DRYLocalization stringForKey:@"OK"] isEqual:nil]) [[self incorrectPasswordButton] setTitle:@"OK" forState:UIControlStateNormal];
         else if (![[DRYLocalization stringForKey:@"OK"] isEqual:nil]) [[self incorrectPasswordButton] setTitle:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"OK"]] forState:UIControlStateNormal];
         if ([fontFamilyValue intValue] == 0) [[[self incorrectPasswordButton] titleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
-        else if ([fontFamilyValue intValue] == 1) [[[self incorrectPasswordButton] titleLabel] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
+        else if ([fontFamilyValue intValue] == 2) [[[self incorrectPasswordButton] titleLabel] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
         [[self incorrectPasswordButton] setTintColor:[UIColor whiteColor]];
         [[self incorrectPasswordButton] setBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.3]];
         [[[self incorrectPasswordButton] layer] setBorderColor:[[UIColor whiteColor] CGColor]];
