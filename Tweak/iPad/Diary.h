@@ -20,7 +20,6 @@ BOOL hasAddedStatusBarObserver = NO;
 
 // time and date
 BOOL enableTimeAndDateSwitch = YES;
-NSString* overrideStyleValue = @"0";
 NSString* timeFormatValue = @"HH:mm";
 NSString* dateFormatValue = @"EEEE, d. MMMM";
 BOOL useCustomDateLocaleSwitch = NO;
@@ -86,7 +85,6 @@ NSMutableArray* spotlightWallpapers = nil;
 
 // passcode
 BOOL enablePasscodeSwitch = NO;
-NSString* overrideStyleValue = @"0";
 NSString* passcodeTypeValue = @"1";
 NSString* usernameValue = @"";
 BOOL automaticallyAttemptToUnlockSwitch = YES;
@@ -94,9 +92,10 @@ BOOL automaticallyFocusTheEntryFieldSwitch = YES;
 
 
 // miscellaneous
+NSString* overrideStyleValue = @"0";
+NSString* fontFamilyValue = @"0";
 BOOL useCustomZIndexSwitch = NO;
 NSString* customZIndexValue = @"0";
-NSString* fontFamilyValue = @"0";
 NSString* notificationOffsetValue = @"0";
 BOOL hideChargingViewSwitch = YES;
 BOOL disableTodaySwipeSwitch = NO;
