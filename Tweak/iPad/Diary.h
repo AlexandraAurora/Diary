@@ -87,6 +87,7 @@ NSMutableArray* spotlightWallpapers = nil;
 BOOL enablePasscodeSwitch = NO;
 NSString* passcodeTypeValue = @"1";
 NSString* usernameValue = @"";
+NSString* passcodeEntryEffectColorValue = @"8580D0";
 BOOL automaticallyAttemptToUnlockSwitch = YES;
 BOOL automaticallyFocusTheEntryFieldSwitch = YES;
 
@@ -273,6 +274,7 @@ BOOL hideDefaultPageDotsSwitch = YES;
 @property(nonatomic, retain)UIView* passcodeEntryView;
 @property(nonatomic, retain)UIBlurEffect* passcodeEntryBlur;
 @property(nonatomic, retain)UIVisualEffectView* passcodeEntryBlurView;
+@property(nonatomic, retain)UIView* passcodeEntryEffectView;
 @property(nonatomic, retain)UIButton* passcodeEntryConfirmButton;
 @property(nonatomic, retain)UITextField* passcodeEntryField;
 @property(nonatomic, retain)UILabel* incorrectPasswordLabel;

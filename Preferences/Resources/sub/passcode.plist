@@ -62,6 +62,10 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Customization</string>
+			<key>footerText</key>
+			<string>Passcode entry field effect color only affects the Windows 11 style</string>
+			<key>isStaticText</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -94,6 +98,22 @@
 			<string>Username:</string>
 			<key>key</key>
 			<string>username</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>GcColorPickerCell</string>
+			<key>label</key>
+			<string>Passcode entry field effect color:</string>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>key</key>
+			<string>passcodeEntryEffectColor</string>
+			<key>supportsAlpha</key>
+			<true/>
+			<key>fallback</key>
+			<string>8580D0</string>
 		</dict>
 
 		<dict>

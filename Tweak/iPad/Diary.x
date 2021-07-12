@@ -2325,6 +2325,7 @@ CSCoverSheetView* coverSheetView = nil;
         [preferences registerObject:&overrideStyleValue default:@"0" forKey:@"overrideStyle"];
         [preferences registerObject:&passcodeTypeValue default:@"1" forKey:@"passcodeType"];
         [preferences registerObject:&usernameValue default:@"" forKey:@"username"];
+        [preferences registerObject:&passcodeEntryEffectColorValue default:@"8580D0" forKey:@"passcodeEntryEffectColor"];
         [preferences registerBool:&automaticallyAttemptToUnlockSwitch default:YES forKey:@"automaticallyAttemptToUnlock"];
         [preferences registerBool:&automaticallyFocusTheEntryFieldSwitch default:YES forKey:@"automaticallyFocusTheEntryField"];
     }
