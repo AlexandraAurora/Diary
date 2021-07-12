@@ -2284,6 +2284,7 @@ CSCoverSheetView* coverSheetView = nil;
     // time and date
     [preferences registerBool:&enableTimeAndDateSwitch default:YES forKey:@"enableTimeAndDate"];
     if (enableTimeAndDateSwitch) {
+        [preferences registerObject:&timeDateStyleValue default:@"0" forKey:@"timeDateStyle"];
         [preferences registerObject:&timeFormatValue default:@"HH:mm" forKey:@"timeFormat"];
         [preferences registerObject:&dateFormatValue default:@"EEEE, d. MMMM" forKey:@"dateFormat"];
         [preferences registerBool:&useCustomDateLocaleSwitch default:NO forKey:@"useCustomDateLocale"];
@@ -2335,6 +2336,7 @@ CSCoverSheetView* coverSheetView = nil;
     // passcode
     [preferences registerBool:&enablePasscodeSwitch default:NO forKey:@"enablePasscode"];
     if (enablePasscodeSwitch) {
+        [preferences registerObject:&passcodeStyleValue default:@"0" forKey:@"passcodeStyle"];
         [preferences registerObject:&passcodeTypeValue default:@"1" forKey:@"passcodeType"];
         [preferences registerObject:&usernameValue default:@"" forKey:@"username"];
         [preferences registerBool:&automaticallyAttemptToUnlockSwitch default:YES forKey:@"automaticallyAttemptToUnlock"];

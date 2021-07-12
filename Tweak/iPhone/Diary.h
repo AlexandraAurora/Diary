@@ -20,6 +20,7 @@ BOOL hasAddedStatusBarObserver = NO;
 
 // time and date
 BOOL enableTimeAndDateSwitch = YES;
+NSString* timeDateStyleValue = @"0";
 NSString* timeFormatValue = @"HH:mm";
 NSString* dateFormatValue = @"EEEE, d. MMMM";
 BOOL useCustomDateLocaleSwitch = NO;
@@ -84,6 +85,7 @@ NSMutableArray* spotlightWallpapers = nil;
 
 // passcode
 BOOL enablePasscodeSwitch = NO;
+NSString* passcodeStyleValue = @"0";
 NSString* passcodeTypeValue = @"1";
 NSString* usernameValue = @"";
 BOOL automaticallyAttemptToUnlockSwitch = YES;
