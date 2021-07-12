@@ -1221,6 +1221,7 @@ CSCoverSheetView* coverSheetView = nil;
 	%orig;
 
     if (![[%c(SBLockScreenManager) sharedInstance] isLockScreenVisible] || isScreenOnTimeAndDate) return; // this method gets called not only when the screen gets turned on, so i verify that it was turned on by checking if the lock screen is visible
+    if ([overrideTimeDateStyleValue intValue] == 1) [coverSheetView layoutTimeAndDate];
 	[self requestDiaryTimeAndDateUpdate];
     if (enableUpNextSwitch && [coverSheetView diaryView]) {
         if ([defaultEventsValue intValue] == 0) [coverSheetView fetchNextCalendarEvent];
