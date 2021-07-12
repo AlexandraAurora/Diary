@@ -48,12 +48,14 @@
 				<integer>0</integer>
 				<integer>1</integer>
 				<integer>2</integer>
+				<integer>3</integer>
 			</array>
 			<key>validTitles</key>
 			<array>
 				<string>4 Digits</string>
 				<string>6 Digits</string>
 				<string>Alphanumeric</string>
+				<string>Alphanumeric (numbers only)</string>
 			</array>
 		</dict>
 

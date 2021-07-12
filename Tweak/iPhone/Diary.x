@@ -2018,7 +2018,7 @@ CSCoverSheetView* coverSheetView = nil;
         else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
         if ([fontFamilyValue intValue] == 0) [[self passcodeEntryField] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
         else if ([fontFamilyValue intValue] == 1) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
-        if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
+        if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1 || [passcodeTypeValue intValue] == 3) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
         [[self passcodeEntryField] setSecureTextEntry:YES];
         [[self passcodeEntryView] addSubview:[self passcodeEntryField]];
 
@@ -2092,7 +2092,7 @@ CSCoverSheetView* coverSheetView = nil;
         else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
         if ([fontFamilyValue intValue] == 0) [[self passcodeEntryField] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
         else if ([fontFamilyValue intValue] == 1) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
-        if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
+        if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1 || [passcodeTypeValue intValue] == 3) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
         [[self passcodeEntryField] setSecureTextEntry:YES];
         [[self passcodeEntryView] addSubview:[self passcodeEntryField]];
 
