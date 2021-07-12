@@ -6,7 +6,7 @@ Dear diary..
 2. Install Diary
 
 ## Compiling
-  - Depends on libGCUniversal & libPDDokdo
+  - Depends on libGCUniversal, libPDDokdo and libKitten
   - You may want to edit the `Makefiles` to suit your theos installation
 
 ## Note
