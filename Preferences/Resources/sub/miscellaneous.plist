@@ -9,6 +9,68 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
+			<string>Style</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>key</key>
+			<string>overrideStyle</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Windows 10</string>
+				<string>Windows 11</string>
+			</array>
+			<key>alignment</key>
+			<string>2</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Font family</string>
+			<key>footerText</key>
+			<string>I couldn't add the original Windows 10 font (SegoeUI) due to its license, instead Diary uses similar fonts</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>love.litten.diarypreferences</string>
+			<key>key</key>
+			<string>fontFamily</string>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Microsoft</string>
+				<string>System</string>
+			</array>
+			<key>alignment</key>
+			<string>2</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
 			<string>Z-Index</string>
 			<key>footerText</key>
 			<string>Increasing this can fix tweak compatibility issues</string>
@@ -44,39 +106,6 @@
 			<real>0</real>
 			<key>singularLabel</key>
 			<string>Index: 1</string>
-		</dict>
-
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Font family</string>
-			<key>footerText</key>
-			<string>I couldn't add the original Windows 10 font (SegoeUI) due to its license, Selawik is Microsoft's free alternative to SegoeUI</string>
-			<key>isStaticText</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSSegmentCell</string>
-			<key>default</key>
-			<integer>0</integer>
-			<key>defaults</key>
-			<string>love.litten.diarypreferences</string>
-			<key>key</key>
-			<string>fontFamily</string>
-			<key>validValues</key>
-			<array>
-				<integer>0</integer>
-				<integer>1</integer>
-			</array>
-			<key>validTitles</key>
-			<array>
-				<string>Selawik</string>
-				<string>System</string>
-			</array>
-			<key>alignment</key>
-			<string>2</string>
 		</dict>
 
 		<dict>
