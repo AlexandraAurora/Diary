@@ -102,28 +102,37 @@ CSCoverSheetView* coverSheetView = nil;
 
     UIEdgeInsets orig = %orig;
 
-    if ((!enableTimeAndDateSwitch && !enableMediaPlayerSwitch && !enableHelloSwitch) || !hideDefaultTimeAndDateSwitch) return orig;
-    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) return orig;
+    if ([overrideTimeDateStyleValue intValue] == 0) {
+        if ((!enableTimeAndDateSwitch && !enableMediaPlayerSwitch && !enableHelloSwitch) || !hideDefaultTimeAndDateSwitch) return orig;
+        if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) return orig;
 
-    if (enableMediaPlayerSwitch && ![[coverSheetView diaryPlayerView] isHidden]) {
-        orig.top -= 90 - ([mediaPlayerOffsetValue intValue] + [notificationOffsetValue intValue]);
-        return orig;
-    }
-    
-    if (enableHelloSwitch) {
-        if (![[coverSheetView diaryHelloIconView] isHidden] && showHelloGreetingSwitch && ![[coverSheetView diaryHelloLabel] isHidden]) {
-            orig.top -= 40 - [notificationOffsetValue intValue];
-            return orig;
-        } else if (![[coverSheetView diaryHelloIconView] isHidden] && showHelloGreetingSwitch && [[coverSheetView diaryHelloLabel] isHidden]) {
-            orig.top -= 100 - [notificationOffsetValue intValue];
-            return orig;
-        } else if (![[coverSheetView diaryHelloIconView] isHidden] && !showHelloGreetingSwitch) {
-            orig.top -= 80 - [notificationOffsetValue intValue];
+        if (enableMediaPlayerSwitch && ![[coverSheetView diaryPlayerView] isHidden]) {
+            orig.top -= 90 - ([mediaPlayerOffsetValue intValue] + [notificationOffsetValue intValue]);
             return orig;
         }
+        
+        if (enableHelloSwitch) {
+            if (![[coverSheetView diaryHelloIconView] isHidden] && showHelloGreetingSwitch && ![[coverSheetView diaryHelloLabel] isHidden]) {
+                orig.top -= 40 - [notificationOffsetValue intValue];
+                return orig;
+            } else if (![[coverSheetView diaryHelloIconView] isHidden] && showHelloGreetingSwitch && [[coverSheetView diaryHelloLabel] isHidden]) {
+                orig.top -= 100 - [notificationOffsetValue intValue];
+                return orig;
+            } else if (![[coverSheetView diaryHelloIconView] isHidden] && !showHelloGreetingSwitch) {
+                orig.top -= 80 - [notificationOffsetValue intValue];
+                return orig;
+            }
+        }
+
+        orig.top -= 180 - [notificationOffsetValue intValue];
+        return orig;
+    } else if ([overrideTimeDateStyleValue intValue] == 1) {
+        if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])) return orig;
+
+        orig.top += 40;
+        return orig;
     }
 
-    orig.top -= 180 - [notificationOffsetValue intValue];
     return orig;
 
 }

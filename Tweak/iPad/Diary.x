@@ -94,20 +94,27 @@ CSCoverSheetView* coverSheetView = nil;
 
     UIEdgeInsets orig = %orig;
 
-    if (enableHelloSwitch) {
-        if (![[coverSheetView diaryHelloIconView] isHidden] && showHelloGreetingSwitch && ![[coverSheetView diaryHelloLabel] isHidden]) {
-            orig.top -= 40 - [notificationOffsetValue intValue];
-            return orig;
-        } else if (![[coverSheetView diaryHelloIconView] isHidden] && showHelloGreetingSwitch && [[coverSheetView diaryHelloLabel] isHidden]) {
-            orig.top -= 100 - [notificationOffsetValue intValue];
-            return orig;
-        } else if (![[coverSheetView diaryHelloIconView] isHidden] && !showHelloGreetingSwitch) {
-            orig.top -= 100 - [notificationOffsetValue intValue];
-            return orig;
+    if ([overrideTimeDateStyleValue intValue] == 0) {
+        if (enableHelloSwitch) {
+            if (![[coverSheetView diaryHelloIconView] isHidden] && showHelloGreetingSwitch && ![[coverSheetView diaryHelloLabel] isHidden]) {
+                orig.top -= 40 - [notificationOffsetValue intValue];
+                return orig;
+            } else if (![[coverSheetView diaryHelloIconView] isHidden] && showHelloGreetingSwitch && [[coverSheetView diaryHelloLabel] isHidden]) {
+                orig.top -= 100 - [notificationOffsetValue intValue];
+                return orig;
+            } else if (![[coverSheetView diaryHelloIconView] isHidden] && !showHelloGreetingSwitch) {
+                orig.top -= 100 - [notificationOffsetValue intValue];
+                return orig;
+            }
         }
+
+        orig.top -= 180 - [notificationOffsetValue intValue];
+        return orig;
+    } else if ([overrideTimeDateStyleValue intValue] == 1) {
+        orig.top += 60;
+        return orig;
     }
 
-    orig.top -= 180 - [notificationOffsetValue intValue];
     return orig;
 
 }
