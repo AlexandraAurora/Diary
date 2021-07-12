@@ -1876,6 +1876,7 @@ CSCoverSheetView* coverSheetView = nil;
 %property(nonatomic, retain)UIView* passcodeEntryView;
 %property(nonatomic, retain)UIBlurEffect* passcodeEntryBlur;
 %property(nonatomic, retain)UIVisualEffectView* passcodeEntryBlurView;
+%property(nonatomic, retain)UIView* passcodeEntryEffectView;
 %property(nonatomic, retain)UIButton* passcodeEntryConfirmButton;
 %property(nonatomic, retain)UITextField* passcodeEntryField;
 %property(nonatomic, retain)UILabel* incorrectPasswordLabel;
@@ -1907,8 +1908,13 @@ CSCoverSheetView* coverSheetView = nil;
     self.usernameLabel = [UILabel new];
     [[self usernameLabel] setTextColor:[UIColor whiteColor]];
     [[self usernameLabel] setText:usernameValue];
-    if ([fontFamilyValue intValue] == 0) [[self usernameLabel] setFont:[UIFont fontWithName:@"Selawik-Light" size:40]];
-    else if ([fontFamilyValue intValue] == 1) [[self usernameLabel] setFont:[UIFont systemFontOfSize:40 weight:UIFontWeightLight]];
+    if ([overrideStyleValue intValue] == 0) {
+        if ([fontFamilyValue intValue] == 0) [[self usernameLabel] setFont:[UIFont fontWithName:@"Selawik-Light" size:40]];
+        else if ([fontFamilyValue intValue] == 1) [[self usernameLabel] setFont:[UIFont systemFontOfSize:40 weight:UIFontWeightLight]];
+    } else if ([overrideStyleValue intValue] == 1) {
+        if ([fontFamilyValue intValue] == 0) [[self usernameLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:32]];
+        else if ([fontFamilyValue intValue] == 1) [[self usernameLabel] setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightMedium]];
+    }
     [[self usernameLabel] setAlpha:0];
     [[self view] addSubview:[self usernameLabel]];
 
@@ -1940,76 +1946,165 @@ CSCoverSheetView* coverSheetView = nil;
 
 
     // passcode entry field
-    // view
-    self.passcodeEntryView = [UIView new];
-    [[[self passcodeEntryView] layer] setBorderColor:[[[UIColor whiteColor] colorWithAlphaComponent:0.4] CGColor]];
-    [[[self passcodeEntryView] layer] setBorderWidth:2];
-    [[self passcodeEntryView] setAlpha:0];
-	[[self view] addSubview:[self passcodeEntryView]];
+    if ([overrideStyleValue intValue] == 0) {
+        // view
+        self.passcodeEntryView = [UIView new];
+        [[[self passcodeEntryView] layer] setBorderColor:[[[UIColor whiteColor] colorWithAlphaComponent:0.4] CGColor]];
+        [[[self passcodeEntryView] layer] setBorderWidth:2];
+        [[self passcodeEntryView] setAlpha:0];
+        [[self view] addSubview:[self passcodeEntryView]];
 
-	[[self passcodeEntryView] setTranslatesAutoresizingMaskIntoConstraints:NO];
-	[NSLayoutConstraint activateConstraints:@[
-        [self.passcodeEntryView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [self.passcodeEntryView.topAnchor constraintEqualToAnchor:self.usernameLabel.bottomAnchor constant:28],
-        [self.passcodeEntryView.widthAnchor constraintEqualToConstant:260],
-        [self.passcodeEntryView.heightAnchor constraintEqualToConstant:35],
-	]];
-
-
-    // button
-    self.passcodeEntryConfirmButton = [UIButton new];
-    [[self passcodeEntryConfirmButton] addTarget:self action:@selector(attemptManualUnlock) forControlEvents:UIControlEventTouchUpInside];
-    [[self passcodeEntryConfirmButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/passcode/confirmButtonArrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [[self passcodeEntryConfirmButton] setTintColor:[UIColor whiteColor]];
-    [[self passcodeEntryConfirmButton] setBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.2]];
-    [[self passcodeEntryConfirmButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
-    [[self passcodeEntryView] addSubview:[self passcodeEntryConfirmButton]];
-
-    [[self passcodeEntryConfirmButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.passcodeEntryConfirmButton.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor],
-        [self.passcodeEntryConfirmButton.trailingAnchor constraintEqualToAnchor:self.passcodeEntryView.trailingAnchor],
-        [self.passcodeEntryConfirmButton.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
-        [self.passcodeEntryConfirmButton.widthAnchor constraintEqualToConstant:35],
-    ]];
+        [[self passcodeEntryView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+            [self.passcodeEntryView.topAnchor constraintEqualToAnchor:self.usernameLabel.bottomAnchor constant:28],
+            [self.passcodeEntryView.widthAnchor constraintEqualToConstant:260],
+            [self.passcodeEntryView.heightAnchor constraintEqualToConstant:35],
+        ]];
 
 
-    // passcode entry blur
-    self.passcodeEntryBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-    self.passcodeEntryBlurView = [[UIVisualEffectView alloc] initWithEffect:[self passcodeEntryBlur]];
-	[[self passcodeEntryBlurView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-	[[self passcodeEntryView] addSubview:[self passcodeEntryBlurView]];
+        // button
+        self.passcodeEntryConfirmButton = [UIButton new];
+        [[self passcodeEntryConfirmButton] addTarget:self action:@selector(attemptManualUnlock) forControlEvents:UIControlEventTouchUpInside];
+        [[self passcodeEntryConfirmButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/passcode/confirmButtonArrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [[self passcodeEntryConfirmButton] setTintColor:[UIColor whiteColor]];
+        [[self passcodeEntryConfirmButton] setBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.2]];
+        [[self passcodeEntryConfirmButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
+        [[self passcodeEntryView] addSubview:[self passcodeEntryConfirmButton]];
 
-    [[self passcodeEntryBlurView] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.passcodeEntryBlurView.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor],
-        [self.passcodeEntryBlurView.leadingAnchor constraintEqualToAnchor:self.passcodeEntryView.leadingAnchor],
-        [self.passcodeEntryBlurView.trailingAnchor constraintEqualToAnchor:self.passcodeEntryConfirmButton.leadingAnchor],
-        [self.passcodeEntryBlurView.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
-    ]];
+        [[self passcodeEntryConfirmButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryConfirmButton.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor],
+            [self.passcodeEntryConfirmButton.trailingAnchor constraintEqualToAnchor:self.passcodeEntryView.trailingAnchor],
+            [self.passcodeEntryConfirmButton.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
+            [self.passcodeEntryConfirmButton.widthAnchor constraintEqualToConstant:35],
+        ]];
 
 
-    // text field
-    self.passcodeEntryField = [UITextField new];
-    if (automaticallyAttemptToUnlockSwitch && ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1)) [[self passcodeEntryField] addTarget:self action:@selector(attemptAutomaticUnlock) forControlEvents:UIControlEventEditingChanged];
-    [[self passcodeEntryField] addTarget:self action:@selector(updatePasscodeEntryEditingStateStyle) forControlEvents:UIControlEventEditingDidBegin];
-    [[self passcodeEntryField] addTarget:self action:@selector(updatePasscodeEntryEditingStateStyle) forControlEvents:UIControlEventEditingDidEnd];
-    [[self passcodeEntryField] setTextColor:[UIColor whiteColor]];
-    if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
-    else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
-    if ([fontFamilyValue intValue] == 0) [[self passcodeEntryField] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
-    else if ([fontFamilyValue intValue] == 1) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
-    if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
-    [[self passcodeEntryField] setSecureTextEntry:YES];
-    [[self passcodeEntryView] addSubview:[self passcodeEntryField]];
+        // passcode entry blur
+        self.passcodeEntryBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        self.passcodeEntryBlurView = [[UIVisualEffectView alloc] initWithEffect:[self passcodeEntryBlur]];
+        [[self passcodeEntryBlurView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+        [[self passcodeEntryView] addSubview:[self passcodeEntryBlurView]];
 
-    [[self passcodeEntryField] setTranslatesAutoresizingMaskIntoConstraints:NO];
-	[NSLayoutConstraint activateConstraints:@[
-        [self.passcodeEntryField.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor],
-        [self.passcodeEntryField.leadingAnchor constraintEqualToAnchor:self.passcodeEntryView.leadingAnchor constant:8],
-        [self.passcodeEntryField.trailingAnchor constraintEqualToAnchor:self.passcodeEntryConfirmButton.leadingAnchor],
-        [self.passcodeEntryField.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
-	]];
+        [[self passcodeEntryBlurView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryBlurView.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor],
+            [self.passcodeEntryBlurView.leadingAnchor constraintEqualToAnchor:self.passcodeEntryView.leadingAnchor],
+            [self.passcodeEntryBlurView.trailingAnchor constraintEqualToAnchor:self.passcodeEntryConfirmButton.leadingAnchor],
+            [self.passcodeEntryBlurView.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
+        ]];
+
+
+        // text field
+        self.passcodeEntryField = [UITextField new];
+        if (automaticallyAttemptToUnlockSwitch && ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1)) [[self passcodeEntryField] addTarget:self action:@selector(attemptAutomaticUnlock) forControlEvents:UIControlEventEditingChanged];
+        [[self passcodeEntryField] addTarget:self action:@selector(updatePasscodeEntryEditingStateStyle) forControlEvents:UIControlEventEditingDidBegin];
+        [[self passcodeEntryField] addTarget:self action:@selector(updatePasscodeEntryEditingStateStyle) forControlEvents:UIControlEventEditingDidEnd];
+        [[self passcodeEntryField] setTextColor:[UIColor whiteColor]];
+        if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
+        else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
+        if ([fontFamilyValue intValue] == 0) [[self passcodeEntryField] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
+        else if ([fontFamilyValue intValue] == 1) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
+        if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1 || [passcodeTypeValue intValue] == 3) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
+        [[self passcodeEntryField] setSecureTextEntry:YES];
+        [[self passcodeEntryView] addSubview:[self passcodeEntryField]];
+
+        [[self passcodeEntryField] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryField.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor],
+            [self.passcodeEntryField.leadingAnchor constraintEqualToAnchor:self.passcodeEntryView.leadingAnchor constant:8],
+            [self.passcodeEntryField.trailingAnchor constraintEqualToAnchor:self.passcodeEntryConfirmButton.leadingAnchor],
+            [self.passcodeEntryField.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
+        ]];
+    } else if ([overrideStyleValue intValue] == 1) {
+        // view
+        self.passcodeEntryView = [UIView new];
+        [[[self passcodeEntryView] layer] setBorderColor:[[[UIColor whiteColor] colorWithAlphaComponent:0.1] CGColor]];
+        [[[self passcodeEntryView] layer] setBorderWidth:2];
+        [[self passcodeEntryView] setClipsToBounds:YES];
+        [[[self passcodeEntryView] layer] setCornerRadius:5];
+        [[self passcodeEntryView] setAlpha:0];
+        [[self view] addSubview:[self passcodeEntryView]];
+
+        [[self passcodeEntryView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+            [self.passcodeEntryView.topAnchor constraintEqualToAnchor:self.usernameLabel.bottomAnchor constant:28],
+            [self.passcodeEntryView.widthAnchor constraintEqualToConstant:260],
+            [self.passcodeEntryView.heightAnchor constraintEqualToConstant:35],
+        ]];
+
+
+        // passcode entry blur
+        self.passcodeEntryBlur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleSystemThickMaterialDark];
+        self.passcodeEntryBlurView = [UIVisualEffectView new];
+        [[self passcodeEntryBlurView] setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+        [[self passcodeEntryBlurView] setClipsToBounds:YES];
+        [[[self passcodeEntryBlurView] layer] setCornerRadius:4];
+        [[self passcodeEntryView] addSubview:[self passcodeEntryBlurView]];
+
+        [[self passcodeEntryBlurView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryBlurView.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor constant:2],
+            [self.passcodeEntryBlurView.leadingAnchor constraintEqualToAnchor:self.passcodeEntryView.leadingAnchor constant:2],
+            [self.passcodeEntryBlurView.trailingAnchor constraintEqualToAnchor:self.passcodeEntryView.trailingAnchor constant:-2],
+            [self.passcodeEntryBlurView.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor constant:-2],
+        ]];
+
+
+        // button
+        self.passcodeEntryConfirmButton = [UIButton new];
+        [[self passcodeEntryConfirmButton] addTarget:self action:@selector(attemptManualUnlock) forControlEvents:UIControlEventTouchUpInside];
+        [[self passcodeEntryConfirmButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/passcode/confirmButtonArrow.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [[self passcodeEntryConfirmButton] setTintColor:[UIColor whiteColor]];
+        [[self passcodeEntryConfirmButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
+        [[self passcodeEntryView] addSubview:[self passcodeEntryConfirmButton]];
+
+        [[self passcodeEntryConfirmButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryConfirmButton.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor],
+            [self.passcodeEntryConfirmButton.trailingAnchor constraintEqualToAnchor:self.passcodeEntryView.trailingAnchor],
+            [self.passcodeEntryConfirmButton.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
+            [self.passcodeEntryConfirmButton.widthAnchor constraintEqualToConstant:35],
+        ]];
+
+
+        // text field
+        self.passcodeEntryField = [UITextField new];
+        if (automaticallyAttemptToUnlockSwitch && ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1)) [[self passcodeEntryField] addTarget:self action:@selector(attemptAutomaticUnlock) forControlEvents:UIControlEventEditingChanged];
+        [[self passcodeEntryField] addTarget:self action:@selector(updatePasscodeEntryEditingStateStyle) forControlEvents:UIControlEventEditingDidBegin];
+        [[self passcodeEntryField] addTarget:self action:@selector(updatePasscodeEntryEditingStateStyle) forControlEvents:UIControlEventEditingDidEnd];
+        [[self passcodeEntryField] setTextColor:[UIColor whiteColor]];
+        if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
+        else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
+        if ([fontFamilyValue intValue] == 0) [[self passcodeEntryField] setFont:[UIFont fontWithName:@"Selawik-Regular" size:15]];
+        else if ([fontFamilyValue intValue] == 1) [[self passcodeEntryField] setFont:[UIFont systemFontOfSize:15 weight:UIFontWeightRegular]];
+        if ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1 || [passcodeTypeValue intValue] == 3) [[self passcodeEntryField] setKeyboardType:UIKeyboardTypeNumberPad];
+        [[self passcodeEntryField] setSecureTextEntry:YES];
+        [[self passcodeEntryView] addSubview:[self passcodeEntryField]];
+
+        [[self passcodeEntryField] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryField.topAnchor constraintEqualToAnchor:self.passcodeEntryView.topAnchor],
+            [self.passcodeEntryField.leadingAnchor constraintEqualToAnchor:self.passcodeEntryView.leadingAnchor constant:8],
+            [self.passcodeEntryField.trailingAnchor constraintEqualToAnchor:self.passcodeEntryConfirmButton.leadingAnchor],
+            [self.passcodeEntryField.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
+        ]];
+
+
+        // text field effect view
+        self.passcodeEntryEffectView = [UIView new];
+        [[self passcodeEntryView] addSubview:[self passcodeEntryEffectView]];
+
+        [[self passcodeEntryEffectView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.passcodeEntryEffectView.leadingAnchor constraintEqualToAnchor:self.passcodeEntryView.leadingAnchor],
+            [self.passcodeEntryEffectView.trailingAnchor constraintEqualToAnchor:self.passcodeEntryView.trailingAnchor],
+            [self.passcodeEntryEffectView.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
+            [self.passcodeEntryEffectView.heightAnchor constraintEqualToConstant:2],
+        ]];
+    }
 
 
     // incorrect password label
@@ -2103,18 +2198,32 @@ CSCoverSheetView* coverSheetView = nil;
 %new
 - (void)updatePasscodeEntryEditingStateStyle { // update the passcode entry field style depending if the user is editing or not
 
-    if ([[self passcodeEntryField] isEditing]) {
-        [[self passcodeEntryField] setTextColor:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]];
-        if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]}]];
-        else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]}]];
-        [[self passcodeEntryBlurView] setEffect:nil];
-        [[self passcodeEntryBlurView] setBackgroundColor:[UIColor whiteColor]];
-    } else {
-        [[self passcodeEntryField] setTextColor:[UIColor whiteColor]];
-        if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
-        else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
-        [[self passcodeEntryBlurView] setEffect:[self passcodeEntryBlur]];
-        [[self passcodeEntryBlurView] setBackgroundColor:[UIColor clearColor]];
+    if ([overrideStyleValue intValue] == 0) {
+        if ([[self passcodeEntryField] isEditing]) {
+            [[self passcodeEntryField] setTextColor:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]];
+            if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]}]];
+            else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]}]];
+            [[self passcodeEntryBlurView] setEffect:nil];
+            [[self passcodeEntryBlurView] setBackgroundColor:[UIColor whiteColor]];
+        } else {
+            [[self passcodeEntryField] setTextColor:[UIColor whiteColor]];
+            if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
+            else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.4]}]];
+            [[self passcodeEntryBlurView] setEffect:[self passcodeEntryBlur]];
+            [[self passcodeEntryBlurView] setBackgroundColor:[UIColor clearColor]];
+        }
+    } else if ([overrideStyleValue intValue] == 1) {
+        if ([[self passcodeEntryField] isEditing]) {
+            if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
+            else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
+            [[self passcodeEntryBlurView] setEffect:[self passcodeEntryBlur]];
+            [[self passcodeEntryEffectView] setBackgroundColor:[GcColorPickerUtils colorWithHex:passcodeEntryEffectColorValue]];
+        } else {
+            if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
+            else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
+            [[self passcodeEntryBlurView] setEffect:nil];
+            [[self passcodeEntryEffectView] setBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4]];
+        }
     }
 
 }
