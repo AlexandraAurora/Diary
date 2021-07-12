@@ -163,6 +163,11 @@ CSCoverSheetView* coverSheetView = nil;
 
     [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         if (enableTimeAndDateSwitch) [[coverSheetView diaryView] setAlpha:0];
+        if (enableUpNextSwitch) {
+            [[coverSheetView diaryCalendarButton] setAlpha:0];
+            [[coverSheetView diaryReminderButton] setAlpha:0];
+            [[coverSheetView diaryAlarmButton] setAlpha:0];
+        }
         if (enableMediaPlayerSwitch) [[coverSheetView diaryPlayerView] setAlpha:0];
     } completion:nil];
 
@@ -174,6 +179,11 @@ CSCoverSheetView* coverSheetView = nil;
 
     [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         if (enableTimeAndDateSwitch) [[coverSheetView diaryView] setAlpha:1];
+        if (enableUpNextSwitch) {
+            [[coverSheetView diaryCalendarButton] setAlpha:1];
+            [[coverSheetView diaryReminderButton] setAlpha:1];
+            [[coverSheetView diaryAlarmButton] setAlpha:1];
+        }
         if (enableMediaPlayerSwitch) [[coverSheetView diaryPlayerView] setAlpha:1];
     } completion:nil];
 
