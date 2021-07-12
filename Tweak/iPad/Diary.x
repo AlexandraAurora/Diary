@@ -1941,11 +1941,11 @@ CSCoverSheetView* coverSheetView = nil;
     self.usernameLabel = [UILabel new];
     [[self usernameLabel] setTextColor:[UIColor whiteColor]];
     [[self usernameLabel] setText:usernameValue];
-    if ([overrideStyleValue intValue] == 0) {
+    if ([overridePasscodeStyleValue intValue] == 0) {
         if ([fontFamilyValue intValue] == 0) [[self usernameLabel] setFont:[UIFont fontWithName:@"Selawik-Light" size:40]];
         else if ([fontFamilyValue intValue] == 1) [[self usernameLabel] setFont:[UIFont fontWithName:@"OpenSans-Light" size:40]];
         else if ([fontFamilyValue intValue] == 2) [[self usernameLabel] setFont:[UIFont systemFontOfSize:40 weight:UIFontWeightLight]];
-    } else if ([overrideStyleValue intValue] == 1) {
+    } else if ([overridePasscodeStyleValue intValue] == 1) {
         if ([fontFamilyValue intValue] == 0) [[self usernameLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:32]];
         else if ([fontFamilyValue intValue] == 1) [[self usernameLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:32]];
         else if ([fontFamilyValue intValue] == 2) [[self usernameLabel] setFont:[UIFont systemFontOfSize:32 weight:UIFontWeightMedium]];
@@ -1981,7 +1981,7 @@ CSCoverSheetView* coverSheetView = nil;
 
 
     // passcode entry field
-    if ([overrideStyleValue intValue] == 0) {
+    if ([overridePasscodeStyleValue intValue] == 0) {
         // view
         self.passcodeEntryView = [UIView new];
         [[[self passcodeEntryView] layer] setBorderColor:[[[UIColor whiteColor] colorWithAlphaComponent:0.4] CGColor]];
@@ -2053,7 +2053,7 @@ CSCoverSheetView* coverSheetView = nil;
             [self.passcodeEntryField.trailingAnchor constraintEqualToAnchor:self.passcodeEntryConfirmButton.leadingAnchor],
             [self.passcodeEntryField.bottomAnchor constraintEqualToAnchor:self.passcodeEntryView.bottomAnchor],
         ]];
-    } else if ([overrideStyleValue intValue] == 1) {
+    } else if ([overridePasscodeStyleValue intValue] == 1) {
         // view
         self.passcodeEntryView = [UIView new];
         [[[self passcodeEntryView] layer] setBorderColor:[[[UIColor whiteColor] colorWithAlphaComponent:0.1] CGColor]];
@@ -2237,7 +2237,7 @@ CSCoverSheetView* coverSheetView = nil;
 %new
 - (void)updatePasscodeEntryEditingStateStyle { // update the passcode entry field style depending if the user is editing or not
 
-    if ([overrideStyleValue intValue] == 0) {
+    if ([overridePasscodeStyleValue intValue] == 0) {
         if ([[self passcodeEntryField] isEditing]) {
             [[self passcodeEntryField] setTextColor:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]];
             if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:1]}]];
@@ -2251,7 +2251,7 @@ CSCoverSheetView* coverSheetView = nil;
             [[self passcodeEntryBlurView] setEffect:[self passcodeEntryBlur]];
             [[self passcodeEntryBlurView] setBackgroundColor:[UIColor clearColor]];
         }
-    } else if ([overrideStyleValue intValue] == 1) {
+    } else if ([overridePasscodeStyleValue intValue] == 1) {
         if ([[self passcodeEntryField] isEditing]) {
             if ([[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
             else if (![[DRYLocalization stringForKey:@"PASSWORD"] isEqual:nil]) [[self passcodeEntryField] setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PASSWORD"]] attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}]];
@@ -2420,7 +2420,7 @@ CSCoverSheetView* coverSheetView = nil;
     // time and date
     [preferences registerBool:&enableTimeAndDateSwitch default:YES forKey:@"enableTimeAndDate"];
     if (enableTimeAndDateSwitch) {
-        [preferences registerObject:&overrideStyleValue default:@"0" forKey:@"overrideStyle"];
+        [preferences registerObject:&overrideTimeDateStyleValue default:@"0" forKey:@"overrideTimeDateStyle"];
         [preferences registerObject:&timeFormatValue default:@"HH:mm" forKey:@"timeFormat"];
         [preferences registerObject:&dateFormatValue default:@"EEEE, d. MMMM" forKey:@"dateFormat"];
         [preferences registerBool:&useCustomDateLocaleSwitch default:NO forKey:@"useCustomDateLocale"];
@@ -2470,7 +2470,7 @@ CSCoverSheetView* coverSheetView = nil;
     // passcode
     [preferences registerBool:&enablePasscodeSwitch default:NO forKey:@"enablePasscode"];
     if (enablePasscodeSwitch) {
-        [preferences registerObject:&overrideStyleValue default:@"0" forKey:@"overrideStyle"];
+        [preferences registerObject:&overridePasscodeStyleValue default:@"0" forKey:@"overridePasscodeStyle"];
         [preferences registerObject:&passcodeTypeValue default:@"1" forKey:@"passcodeType"];
         [preferences registerObject:&usernameValue default:@"" forKey:@"username"];
         [preferences registerObject:&passcodeEntryEffectColorValue default:@"8580D0" forKey:@"passcodeEntryEffectColor"];
