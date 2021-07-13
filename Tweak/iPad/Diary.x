@@ -1274,8 +1274,16 @@ SBFWallpaperView* lockscreenWallpaper = nil;
         [[[self view] layer] setMask:notificationMask];
     } else if ([overrideTimeDateStyleValue intValue] == 1) {
         [notificationMask setFrame:[[self view] bounds]];
-        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.8), @(0.875), nil]];
-        else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.825), @(0.9), nil]];
+        if ([[[coverSheetView diaryEventTitleLabel] text] isEqualToString:@""]) {
+            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.85), @(0.925), nil]];
+            else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.825), @(0.9), nil]];
+        } else if (![[[coverSheetView diaryEventTitleLabel] text] isEqualToString:@""]) {
+            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.8), @(0.875), nil]];
+            else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.825), @(0.9), nil]];
+        } else {
+            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.8), @(0.875), nil]];
+            else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.825), @(0.9), nil]];
+        }
         [[[self view] layer] setMask:notificationMask];
     }
 
