@@ -109,7 +109,7 @@
 			<key>label</key>
 			<string>Z-Index</string>
 			<key>footerText</key>
-			<string>Increasing this can fix tweak compatibility issues</string>
+			<string>Increasing this can fix tweak compatibility issues with the Windows 10 style for the time and date</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
