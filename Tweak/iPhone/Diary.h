@@ -152,6 +152,7 @@ BOOL hideDefaultPageDotsSwitch = YES;
 - (void)fetchNextAlarm;
 - (void)updateWeather;
 - (void)handleSlideUpToUnlockPan:(UIPanGestureRecognizer *)recognizer;
+- (void)resetDiaryViewTransform;
 - (void)handleBounceTap:(UITapGestureRecognizer *)recognizer;
 - (void)initHelloViewWithAnimation:(int)animation;
 - (void)playHelloStartAnimation;
@@ -191,6 +192,7 @@ BOOL hideDefaultPageDotsSwitch = YES;
 @interface SBLockScreenManager : NSObject
 + (id)sharedInstance;
 - (BOOL)isLockScreenVisible;
+- (BOOL)_isPasscodeVisible;
 - (BOOL)isUILocked;
 - (BOOL)unlockUIFromSource:(int)arg1 withOptions:(id)arg2;
 - (void)attemptUnlockWithPasscode:(id)arg1 finishUIUnlock:(BOOL)arg2 completion:(id)arg3;

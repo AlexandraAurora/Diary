@@ -1023,27 +1023,35 @@ CSCoverSheetView* coverSheetView = nil;
         }
         if (translation.y <= -200) [[%c(SBLockScreenManager) sharedInstance] unlockUIFromSource:17 withOptions:nil];
     } else if ([recognizer state] == UIGestureRecognizerStateEnded) {
-        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [[self diaryView] setTransform:CGAffineTransformIdentity];
-            if (enableMediaPlayerSwitch) [[self diaryPlayerView] setTransform:CGAffineTransformIdentity];
-            [[self diaryView] setAlpha:1];
-            if (enableMediaPlayerSwitch) [[self diaryPlayerView] setAlpha:1];
-            if (enableUpNextSwitch) {
-                if (showCalendarEventButtonSwitch) {
-                    [[self diaryCalendarButton] setTransform:CGAffineTransformIdentity];
-                    [[self diaryCalendarButton] setAlpha:1];
-                }
-                if (showReminderButtonSwitch) {
-                    [[self diaryReminderButton] setTransform:CGAffineTransformIdentity];
-                    [[self diaryReminderButton] setAlpha:1];
-                }
-                if (showAlarmButtonSwitch) {
-                    [[self diaryAlarmButton] setTransform:CGAffineTransformIdentity];
-                    [[self diaryAlarmButton] setAlpha:1];
-                }
-            }
-        } completion:nil];
+        if ([[%c(SBLockScreenManager) sharedInstance] _isPasscodeVisible]) return;
+        
     }
+
+}
+
+%new
+- (void)resetDiaryViewTransform { // transform diary back
+
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [[self diaryView] setTransform:CGAffineTransformIdentity];
+        if (enableMediaPlayerSwitch) [[self diaryPlayerView] setTransform:CGAffineTransformIdentity];
+        [[self diaryView] setAlpha:1];
+        if (enableMediaPlayerSwitch) [[self diaryPlayerView] setAlpha:1];
+        if (enableUpNextSwitch) {
+            if (showCalendarEventButtonSwitch) {
+                [[self diaryCalendarButton] setTransform:CGAffineTransformIdentity];
+                [[self diaryCalendarButton] setAlpha:1];
+            }
+            if (showReminderButtonSwitch) {
+                [[self diaryReminderButton] setTransform:CGAffineTransformIdentity];
+                [[self diaryReminderButton] setAlpha:1];
+            }
+            if (showAlarmButtonSwitch) {
+                [[self diaryAlarmButton] setTransform:CGAffineTransformIdentity];
+                [[self diaryAlarmButton] setAlpha:1];
+            }
+        }
+    } completion:nil];
 
 }
 
@@ -1198,6 +1206,7 @@ CSCoverSheetView* coverSheetView = nil;
 	[timeAndDateTimer invalidate];
 	timeAndDateTimer = nil;
     isScreenOnTimeAndDate = NO;
+    [coverSheetView resetDiaryViewTransform];
 
 }
 
@@ -1215,6 +1224,20 @@ CSCoverSheetView* coverSheetView = nil;
     } else {
         isTimerRunning = NO;
     }
+
+}
+
+%end
+
+%hook SBUIPasscodeLockNumberPad
+
+- (void)_cancelButtonHit { // reset the time and date transform
+
+    %orig;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.15 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [coverSheetView resetDiaryViewTransform];
+    });
 
 }
 
@@ -2282,11 +2305,14 @@ CSCoverSheetView* coverSheetView = nil;
 
 }
 
-- (void)passcodeLockViewCancelButtonPressed:(id)arg1 { // animate the passcode screen out when the passcode disappears
+- (void)passcodeLockViewCancelButtonPressed:(id)arg1 { // animate the passcode screen out when the passcode disappears and reset the time and date transform
 
     %orig;
 
     [self animatePasscodeScreenIn:NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.35 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [coverSheetView resetDiaryViewTransform];
+    });
 
 }
 
@@ -2309,7 +2335,7 @@ CSCoverSheetView* coverSheetView = nil;
             [[self passcodeEntryView] setAlpha:1];
         } completion:nil];
     } else {
-        [UIView animateWithDuration:0.25 delay:0.25 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.25 delay:0.15 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             [[self backgroundBlurView] setAlpha:0];
         } completion:nil];
 
