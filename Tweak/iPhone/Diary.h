@@ -294,6 +294,13 @@ BOOL hideDefaultPageDotsSwitch = YES;
 - (void)passcodeLockViewCancelButtonPressed:(id)arg1;
 @end
 
+@interface SBFWallpaperView : UIView
+@end
+
+@interface SBWallpaperViewController : UIViewController
+@property(nonatomic, retain)SBFWallpaperView* lockscreenWallpaperView;
+@end
+
 @interface SBSimplePasscodeEntryFieldButton : UIView
 @end
 

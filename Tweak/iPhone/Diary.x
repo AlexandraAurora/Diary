@@ -1,6 +1,7 @@
 #import "Diary.h"
 
 CSCoverSheetView* coverSheetView = nil;
+SBFWallpaperView* lockscreenWallpaper = nil;
 
 %group DiaryGlobal
 
@@ -2567,6 +2568,14 @@ CSCoverSheetView* coverSheetView = nil;
 
 }
 
+- (void)viewWillDisappear:(BOOL)animated { // reset the passcode screen when it disappears
+
+    %orig;
+
+    [self animatePasscodeScreenIn:NO];
+
+}
+
 - (void)passcodeLockViewCancelButtonPressed:(id)arg1 { // animate the passcode screen out when the passcode disappears and reset the time and date transform
 
     %orig;
@@ -2587,7 +2596,11 @@ CSCoverSheetView* coverSheetView = nil;
         [[self usernameLabel] setAlpha:0];
         [[self passcodeEntryView] setAlpha:0];
 
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            [lockscreenWallpaper setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
+        } completion:nil];
+
+        [UIView animateWithDuration:0.6 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             [[self backgroundBlurView] setAlpha:1];
         } completion:nil];
 
@@ -2597,6 +2610,10 @@ CSCoverSheetView* coverSheetView = nil;
             [[self passcodeEntryView] setAlpha:1];
         } completion:nil];
     } else {
+        [UIView animateWithDuration:0.5 delay:0.2 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            [lockscreenWallpaper setTransform:CGAffineTransformMakeScale(1, 1)];
+        } completion:nil];
+        
         [UIView animateWithDuration:0.25 delay:0.15 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             [[self backgroundBlurView] setAlpha:0];
         } completion:nil];
@@ -2700,6 +2717,18 @@ CSCoverSheetView* coverSheetView = nil;
 - (void)authenticatedWithBiometrics { // automatically unlock when authenticated with biometrics
 
     [[%c(SBLockScreenManager) sharedInstance] unlockUIFromSource:17 withOptions:nil];
+
+}
+
+%end
+
+%hook SBWallpaperViewController
+
+- (void)viewDidLoad { // get an instance of the lock screen wallpaper view
+
+    %orig;
+
+    lockscreenWallpaper = [self lockscreenWallpaperView];
 
 }
 
