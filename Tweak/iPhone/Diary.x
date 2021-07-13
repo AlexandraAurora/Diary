@@ -2544,7 +2544,7 @@ CSCoverSheetView* coverSheetView = nil;
 
 }
 
-- (void)passcodeLockViewCancelButtonPressed:(id)arg1 {
+- (void)passcodeLockViewCancelButtonPressed:(id)arg1 { // animate the passcode screen out when the passcode disappears
 
     %orig;
 

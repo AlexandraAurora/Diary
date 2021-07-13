@@ -282,7 +282,7 @@ BOOL hideDefaultPageDotsSwitch = YES;
 @property(nonatomic, retain)UILabel* incorrectPasswordLabel;
 @property(nonatomic, retain)UIButton* incorrectPasswordButton;
 @property(nonatomic, retain)UITapGestureRecognizer* tapGesture;
-- (void)animatePasscodeScreen;
+- (void)animatePasscodeScreenIn:(BOOL)animateIn;
 - (void)updatePasscodeEntryEditingStateStyle;
 - (void)attemptManualUnlock;
 - (void)attemptAutomaticUnlock;

@@ -2270,7 +2270,7 @@ CSCoverSheetView* coverSheetView = nil;
 
     %orig;
 
-    [self animatePasscodeScreen];
+    [self animatePasscodeScreenIn:YES];
 
 }
 
@@ -2282,23 +2282,43 @@ CSCoverSheetView* coverSheetView = nil;
 
 }
 
+- (void)passcodeLockViewCancelButtonPressed:(id)arg1 { // animate the passcode screen out when the passcode disappears
+
+    %orig;
+
+    [self animatePasscodeScreenIn:NO];
+
+}
+
 %new
-- (void)animatePasscodeScreen { // animate the passcode screen in
+- (void)animatePasscodeScreenIn:(BOOL)animateIn { // animate the passcode screen in
 
-    [[self backgroundBlurView] setAlpha:0];
-    [[self userAvatar] setAlpha:0];
-    [[self usernameLabel] setAlpha:0];
-    [[self passcodeEntryView] setAlpha:0];
+    if (animateIn) {
+        [[self backgroundBlurView] setAlpha:0];
+        [[self userAvatar] setAlpha:0];
+        [[self usernameLabel] setAlpha:0];
+        [[self passcodeEntryView] setAlpha:0];
 
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        [[self backgroundBlurView] setAlpha:1];
-    } completion:nil];
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [[self backgroundBlurView] setAlpha:1];
+        } completion:nil];
 
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        [[self userAvatar] setAlpha:1];
-        [[self usernameLabel] setAlpha:1];
-        [[self passcodeEntryView] setAlpha:1];
-    } completion:nil];
+        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [[self userAvatar] setAlpha:1];
+            [[self usernameLabel] setAlpha:1];
+            [[self passcodeEntryView] setAlpha:1];
+        } completion:nil];
+    } else {
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [[self backgroundBlurView] setAlpha:0];
+        } completion:nil];
+
+        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [[self userAvatar] setAlpha:0];
+            [[self usernameLabel] setAlpha:0];
+            [[self passcodeEntryView] setAlpha:0];
+        } completion:nil];
+    }
 
 }
 
