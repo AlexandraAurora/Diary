@@ -1238,15 +1238,22 @@ CSCoverSheetView* coverSheetView = nil;
 %new
 - (void)updateFrameAfterRotation { // update mask frame when rotated
 
-    [notificationMask setFrame:[[self view] bounds]];
-    if ([[[coverSheetView diaryEventTitleLabel] text] isEqualToString:@""] || ![coverSheetView diaryEventTitleLabel]) {
-        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.725), @(0.8), nil]];
-        else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.625), @(0.7), nil]];
-    } else {
-        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.65), @(0.725), nil]];
-        else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.575), @(0.65), nil]];
+    if ([overrideTimeDateStyleValue intValue] == 0) {
+        [notificationMask setFrame:[[self view] bounds]];
+        if ([[[coverSheetView diaryEventTitleLabel] text] isEqualToString:@""] || ![coverSheetView diaryEventTitleLabel]) {
+            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.725), @(0.8), nil]];
+            else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.625), @(0.7), nil]];
+        } else {
+            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.65), @(0.725), nil]];
+            else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.575), @(0.65), nil]];
+        }
+        [[[self view] layer] setMask:notificationMask];
+    } else if ([overrideTimeDateStyleValue intValue] == 1) {
+        [notificationMask setFrame:[[self view] bounds]];
+        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.8), @(0.875), nil]];
+        else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.825), @(0.9), nil]];
+        [[[self view] layer] setMask:notificationMask];
     }
-    [[[self view] layer] setMask:notificationMask];
 
 }
 

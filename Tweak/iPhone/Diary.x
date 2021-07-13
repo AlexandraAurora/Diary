@@ -1320,15 +1320,22 @@ CSCoverSheetView* coverSheetView = nil;
 %new
 - (void)updateFrameAfterRotation { // update mask frame when rotated
 
-    [notificationMask setFrame:[[self view] bounds]];
-    if ([[[coverSheetView diaryEventTitleLabel] text] isEqualToString:@""] || ![coverSheetView diaryEventTitleLabel]) {
-        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.7), @(0.775), nil]];
+    if ([overrideTimeDateStyleValue intValue] == 0) {
+        [notificationMask setFrame:[[self view] bounds]];
+        if ([[[coverSheetView diaryEventTitleLabel] text] isEqualToString:@""] || ![coverSheetView diaryEventTitleLabel]) {
+            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.7), @(0.775), nil]];
+            else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.75), @(0.825), nil]];
+        } else {
+            if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.6), @(0.675), nil]];
+            else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.75), @(0.825), nil]];
+        }
+        [[[self view] layer] setMask:notificationMask];
+    } else if ([overrideTimeDateStyleValue intValue] == 1) {
+        [notificationMask setFrame:[[self view] bounds]];
+        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.775), @(0.85), nil]];
         else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.75), @(0.825), nil]];
-    } else {
-        if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation])) [notificationMask setLocations:[NSArray arrayWithObjects:@(0.6), @(0.675), nil]];
-        else [notificationMask setLocations:[NSArray arrayWithObjects:@(0.75), @(0.825), nil]];
+        [[[self view] layer] setMask:notificationMask];
     }
-    [[[self view] layer] setMask:notificationMask];
 
 }
 
