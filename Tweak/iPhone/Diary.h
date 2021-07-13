@@ -9,7 +9,6 @@
 #import <Kitten/libKitten.h>
 #import "../DRYLocalization.h"
 #import <Cephei/HBPreferences.h>
-#import <AudioToolbox/AudioServices.h>
 
 HBPreferences* preferences = nil;
 BOOL enabled = NO;
