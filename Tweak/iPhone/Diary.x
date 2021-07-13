@@ -943,6 +943,27 @@ CSCoverSheetView* coverSheetView = nil;
                 [self.diaryDateLabel.leadingAnchor constraintEqualToAnchor:self.diaryView.leadingAnchor constant:32],
                 [self.diaryDateLabel.trailingAnchor constraintEqualToAnchor:self.diaryView.trailingAnchor],
             ]];
+        } else {
+            // time label
+            [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentCenter];
+            
+            [[self diaryTimeLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [NSLayoutConstraint activateConstraints:@[
+                [self.diaryTimeLabel.topAnchor constraintEqualToAnchor:self.diaryView.topAnchor constant:124],
+                [self.diaryTimeLabel.leadingAnchor constraintEqualToAnchor:self.diaryView.leadingAnchor],
+                [self.diaryTimeLabel.trailingAnchor constraintEqualToAnchor:self.diaryView.trailingAnchor],
+            ]];
+
+
+            // date label
+            [[self diaryDateLabel] setTextAlignment:NSTextAlignmentCenter];
+
+            [[self diaryDateLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [NSLayoutConstraint activateConstraints:@[
+                [self.diaryDateLabel.topAnchor constraintEqualToAnchor:self.diaryTimeLabel.bottomAnchor constant:8],
+                [self.diaryDateLabel.leadingAnchor constraintEqualToAnchor:self.diaryView.leadingAnchor],
+                [self.diaryDateLabel.trailingAnchor constraintEqualToAnchor:self.diaryView.trailingAnchor],
+            ]];
         }
     }
 
