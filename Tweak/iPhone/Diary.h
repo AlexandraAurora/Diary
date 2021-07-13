@@ -288,6 +288,7 @@ BOOL hideDefaultPageDotsSwitch = YES;
 - (void)hideIncorrectPasswordView;
 - (void)dismissKeyboard;
 - (void)authenticatedWithBiometrics;
+- (void)passcodeLockViewCancelButtonPressed:(id)arg1;
 @end
 
 @interface SBSimplePasscodeEntryFieldButton : UIView

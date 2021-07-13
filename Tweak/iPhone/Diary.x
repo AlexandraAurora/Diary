@@ -2645,7 +2645,8 @@ CSCoverSheetView* coverSheetView = nil;
 %new
 - (void)dismissKeyboard { // hide the keyboard after tapping anywhere or when unlocking
 
-    if ([[self incorrectPasswordLabel] isHidden]) [[self passcodeEntryField] resignFirstResponder];
+    if ([[self incorrectPasswordLabel] isHidden] && [[self passcodeEntryField] isEditing]) [[self passcodeEntryField] resignFirstResponder];
+    else if ([[self incorrectPasswordLabel] isHidden] && ![[self passcodeEntryField] isEditing]) [self passcodeLockViewCancelButtonPressed:nil];
 
 }
 
