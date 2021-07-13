@@ -73,7 +73,6 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 - (void)updateFrameAfterRotation { // hide the player in landscape mode and update gradient frame when rotated
 
     if (enableMediaPlayerSwitch) {
-
         if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) && ([[%c(SBMediaController) sharedInstance] isPlaying] || [[%c(SBMediaController) sharedInstance] isPaused]))
             [[self diaryPlayerView] setHidden:YES];
         else if (UIDeviceOrientationIsPortrait([[UIDevice currentDevice] orientation]) && ([[%c(SBMediaController) sharedInstance] isPlaying] || [[%c(SBMediaController) sharedInstance] isPaused]))
