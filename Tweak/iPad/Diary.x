@@ -2309,7 +2309,7 @@ CSCoverSheetView* coverSheetView = nil;
             [[self passcodeEntryView] setAlpha:1];
         } completion:nil];
     } else {
-        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.25 delay:0.25 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             [[self backgroundBlurView] setAlpha:0];
         } completion:nil];
 
