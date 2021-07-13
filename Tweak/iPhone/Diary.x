@@ -1750,140 +1750,275 @@ CSCoverSheetView* coverSheetView = nil;
 
     if ([self diaryPlayerView]) return;
 
+    if ([overrideTimeDateStyleValue intValue] == 0) {
+        // player view
+        self.diaryPlayerView = [UIView new];
+        [[self diaryPlayerView] setBackgroundColor:[[GcColorPickerUtils colorWithHex:customMediaPlayerBackgroundColorValue] colorWithAlphaComponent:[mediaPlayerBackgroundAmountValue doubleValue]]];
+        [[self diaryPlayerView] setHidden:YES];
+        [self addSubview:[self diaryPlayerView]];
 
-    // player view
-    self.diaryPlayerView = [UIView new];
-    [[self diaryPlayerView] setBackgroundColor:[[GcColorPickerUtils colorWithHex:customMediaPlayerBackgroundColorValue] colorWithAlphaComponent:[mediaPlayerBackgroundAmountValue doubleValue]]];
-    [[self diaryPlayerView] setHidden:YES];
-    [self addSubview:[self diaryPlayerView]];
-
-    [[self diaryPlayerView] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.diaryPlayerView.topAnchor constraintEqualToAnchor:self.topAnchor],
-        [self.diaryPlayerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-        [self.diaryPlayerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-        [self.diaryPlayerView.heightAnchor constraintEqualToConstant:140 + [mediaPlayerOffsetValue doubleValue]],
-    ]];
-
-
-    // artwork
-    self.diaryArtworkView = [UIImageView new];
-    [[self diaryArtworkView] setContentMode:UIViewContentModeScaleAspectFill];
-    [[self diaryArtworkView] setClipsToBounds:YES];
-    [[self diaryPlayerView] addSubview:[self diaryArtworkView]];
-
-    [[self diaryArtworkView] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.diaryArtworkView.leadingAnchor constraintEqualToAnchor:self.diaryPlayerView.leadingAnchor],
-        [self.diaryArtworkView.bottomAnchor constraintEqualToAnchor:self.diaryPlayerView.bottomAnchor],
-        [self.diaryArtworkView.widthAnchor constraintEqualToConstant:140],
-        [self.diaryArtworkView.heightAnchor constraintEqualToConstant:140],
-    ]];
+        [[self diaryPlayerView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryPlayerView.topAnchor constraintEqualToAnchor:self.topAnchor],
+            [self.diaryPlayerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+            [self.diaryPlayerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+            [self.diaryPlayerView.heightAnchor constraintEqualToConstant:140 + [mediaPlayerOffsetValue doubleValue]],
+        ]];
 
 
-    // music controls view
-    self.diaryMusicControlsView = [UIView new];
-    [[self diaryPlayerView] addSubview:[self diaryMusicControlsView]];
+        // artwork
+        self.diaryArtworkView = [UIImageView new];
+        [[self diaryArtworkView] setContentMode:UIViewContentModeScaleAspectFill];
+        [[self diaryArtworkView] setClipsToBounds:YES];
+        [[self diaryPlayerView] addSubview:[self diaryArtworkView]];
 
-    [[self diaryMusicControlsView] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.diaryMusicControlsView.leadingAnchor constraintEqualToAnchor:self.diaryArtworkView.trailingAnchor constant:32],
-        [self.diaryMusicControlsView.trailingAnchor constraintEqualToAnchor:self.diaryPlayerView.trailingAnchor constant:-32],
-        [self.diaryMusicControlsView.bottomAnchor constraintEqualToAnchor:self.diaryPlayerView.bottomAnchor constant:-12],
-        [self.diaryMusicControlsView.heightAnchor constraintEqualToConstant:40],
-    ]];
-
-
-    // rewind button
-    self.diaryRewindButton = [UIButton new];
-    [[self diaryRewindButton] addTarget:self action:@selector(rewindSong) forControlEvents:UIControlEventTouchUpInside];
-    [[self diaryRewindButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/rewind.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [[self diaryRewindButton] setTintColor:[UIColor whiteColor]];
-    [[self diaryRewindButton] setAdjustsImageWhenHighlighted:NO];
-    [[self diaryRewindButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
-    [[self diaryMusicControlsView] addSubview:[self diaryRewindButton]];
-
-    [[self diaryRewindButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.diaryRewindButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
-        [self.diaryRewindButton.leadingAnchor constraintEqualToAnchor:self.diaryMusicControlsView.leadingAnchor],
-        [self.diaryRewindButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
-        [self.diaryRewindButton.widthAnchor constraintEqualToConstant:40],
-    ]];
+        [[self diaryArtworkView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryArtworkView.leadingAnchor constraintEqualToAnchor:self.diaryPlayerView.leadingAnchor],
+            [self.diaryArtworkView.bottomAnchor constraintEqualToAnchor:self.diaryPlayerView.bottomAnchor],
+            [self.diaryArtworkView.widthAnchor constraintEqualToConstant:140],
+            [self.diaryArtworkView.heightAnchor constraintEqualToConstant:140],
+        ]];
 
 
-    // pause button
-    self.diaryPauseButton = [UIButton new];
-    [[self diaryPauseButton] addTarget:self action:@selector(pausePlaySong) forControlEvents:UIControlEventTouchUpInside];
-    [[self diaryPauseButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/pause.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [[self diaryPauseButton] setTintColor:[UIColor whiteColor]];
-    [[self diaryPauseButton] setAdjustsImageWhenHighlighted:NO];
-    [[self diaryPauseButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
-    [[self diaryMusicControlsView] addSubview:[self diaryPauseButton]];
+        // music controls view
+        self.diaryMusicControlsView = [UIView new];
+        [[self diaryPlayerView] addSubview:[self diaryMusicControlsView]];
 
-    [[self diaryPauseButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.diaryPauseButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
-        [self.diaryPauseButton.centerXAnchor constraintEqualToAnchor:self.diaryMusicControlsView.centerXAnchor],
-        [self.diaryPauseButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
-        [self.diaryPauseButton.widthAnchor constraintEqualToConstant:40],
-    ]];
+        [[self diaryMusicControlsView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryMusicControlsView.leadingAnchor constraintEqualToAnchor:self.diaryArtworkView.trailingAnchor constant:32],
+            [self.diaryMusicControlsView.trailingAnchor constraintEqualToAnchor:self.diaryPlayerView.trailingAnchor constant:-32],
+            [self.diaryMusicControlsView.bottomAnchor constraintEqualToAnchor:self.diaryPlayerView.bottomAnchor constant:-12],
+            [self.diaryMusicControlsView.heightAnchor constraintEqualToConstant:40],
+        ]];
 
 
-    // skip button
-    self.diarySkipButton = [UIButton new];
-    [[self diarySkipButton] addTarget:self action:@selector(skipSong) forControlEvents:UIControlEventTouchUpInside];
-    [[self diarySkipButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/skip.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [[self diarySkipButton] setTintColor:[UIColor whiteColor]];
-    [[self diarySkipButton] setAdjustsImageWhenHighlighted:NO];
-    [[self diarySkipButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
-    [[self diaryMusicControlsView] addSubview:[self diarySkipButton]];
+        // rewind button
+        self.diaryRewindButton = [UIButton new];
+        [[self diaryRewindButton] addTarget:self action:@selector(rewindSong) forControlEvents:UIControlEventTouchUpInside];
+        [[self diaryRewindButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/rewind.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [[self diaryRewindButton] setTintColor:[UIColor whiteColor]];
+        [[self diaryRewindButton] setAdjustsImageWhenHighlighted:NO];
+        [[self diaryRewindButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
+        [[self diaryMusicControlsView] addSubview:[self diaryRewindButton]];
 
-    [[self diarySkipButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.diarySkipButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
-        [self.diarySkipButton.trailingAnchor constraintEqualToAnchor:self.diaryMusicControlsView.trailingAnchor],
-        [self.diarySkipButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
-        [self.diarySkipButton.widthAnchor constraintEqualToConstant:40],
-    ]];
-
-
-    // artist label
-    self.diaryArtistLabel = [UILabel new];
-    [[self diaryArtistLabel] setTextColor:[UIColor whiteColor]];
-    if ([fontFamilyValue intValue] == 0) [[self diaryArtistLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:17]];
-    else if ([fontFamilyValue intValue] == 1) [[self diaryArtistLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:17]];
-    else if ([fontFamilyValue intValue] == 2) [[self diaryArtistLabel] setFont:[UIFont systemFontOfSize:17 weight:UIFontWeightRegular]];
-    [[self diaryArtistLabel] setTextAlignment:NSTextAlignmentLeft];
-    [[self diaryArtistLabel] setMarqueeEnabled:YES];
-    [[self diaryArtistLabel] setMarqueeRunning:YES];
-    [[self diaryPlayerView] addSubview:[self diaryArtistLabel]];
-
-    [[self diaryArtistLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.diaryArtistLabel.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor constant:-24],
-        [self.diaryArtistLabel.leadingAnchor constraintEqualToAnchor:self.diaryArtworkView.trailingAnchor constant:24],
-        [self.diaryArtistLabel.trailingAnchor constraintEqualToAnchor:self.diaryPlayerView.trailingAnchor constant:-24],
-    ]];
+        [[self diaryRewindButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryRewindButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
+            [self.diaryRewindButton.leadingAnchor constraintEqualToAnchor:self.diaryMusicControlsView.leadingAnchor],
+            [self.diaryRewindButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
+            [self.diaryRewindButton.widthAnchor constraintEqualToConstant:40],
+        ]];
 
 
-    // song title label
-    self.diarySongTitleLabel = [UILabel new];
-    [[self diarySongTitleLabel] setTextColor:[UIColor whiteColor]];
-    if ([fontFamilyValue intValue] == 0) [[self diarySongTitleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:23]];
-    else if ([fontFamilyValue intValue] == 1) [[self diarySongTitleLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:23]];
-    else if ([fontFamilyValue intValue] == 2) [[self diarySongTitleLabel] setFont:[UIFont systemFontOfSize:23 weight:UIFontWeightRegular]];
-    [[self diarySongTitleLabel] setTextAlignment:NSTextAlignmentLeft];
-    [[self diarySongTitleLabel] setMarqueeEnabled:YES];
-    [[self diarySongTitleLabel] setMarqueeRunning:YES];
-    [[self diaryPlayerView] addSubview:[self diarySongTitleLabel]];
+        // pause button
+        self.diaryPauseButton = [UIButton new];
+        [[self diaryPauseButton] addTarget:self action:@selector(pausePlaySong) forControlEvents:UIControlEventTouchUpInside];
+        [[self diaryPauseButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/pause.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [[self diaryPauseButton] setTintColor:[UIColor whiteColor]];
+        [[self diaryPauseButton] setAdjustsImageWhenHighlighted:NO];
+        [[self diaryPauseButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
+        [[self diaryMusicControlsView] addSubview:[self diaryPauseButton]];
 
-    [[self diarySongTitleLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [NSLayoutConstraint activateConstraints:@[
-        [self.diarySongTitleLabel.bottomAnchor constraintEqualToAnchor:self.diaryArtistLabel.topAnchor constant:-2],
-        [self.diarySongTitleLabel.leadingAnchor constraintEqualToAnchor:self.diaryArtworkView.trailingAnchor constant:24],
-        [self.diarySongTitleLabel.trailingAnchor constraintEqualToAnchor:self.diaryPlayerView.trailingAnchor constant:-24],
-    ]];
+        [[self diaryPauseButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryPauseButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
+            [self.diaryPauseButton.centerXAnchor constraintEqualToAnchor:self.diaryMusicControlsView.centerXAnchor],
+            [self.diaryPauseButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
+            [self.diaryPauseButton.widthAnchor constraintEqualToConstant:40],
+        ]];
+
+
+        // skip button
+        self.diarySkipButton = [UIButton new];
+        [[self diarySkipButton] addTarget:self action:@selector(skipSong) forControlEvents:UIControlEventTouchUpInside];
+        [[self diarySkipButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/skip.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [[self diarySkipButton] setTintColor:[UIColor whiteColor]];
+        [[self diarySkipButton] setAdjustsImageWhenHighlighted:NO];
+        [[self diarySkipButton] setImageEdgeInsets:UIEdgeInsetsMake(7, 7, 7, 7)];
+        [[self diaryMusicControlsView] addSubview:[self diarySkipButton]];
+
+        [[self diarySkipButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diarySkipButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
+            [self.diarySkipButton.trailingAnchor constraintEqualToAnchor:self.diaryMusicControlsView.trailingAnchor],
+            [self.diarySkipButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
+            [self.diarySkipButton.widthAnchor constraintEqualToConstant:40],
+        ]];
+
+
+        // artist label
+        self.diaryArtistLabel = [UILabel new];
+        [[self diaryArtistLabel] setTextColor:[UIColor whiteColor]];
+        if ([fontFamilyValue intValue] == 0) [[self diaryArtistLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:17]];
+        else if ([fontFamilyValue intValue] == 1) [[self diaryArtistLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:17]];
+        else if ([fontFamilyValue intValue] == 2) [[self diaryArtistLabel] setFont:[UIFont systemFontOfSize:17 weight:UIFontWeightRegular]];
+        [[self diaryArtistLabel] setTextAlignment:NSTextAlignmentLeft];
+        [[self diaryArtistLabel] setMarqueeEnabled:YES];
+        [[self diaryArtistLabel] setMarqueeRunning:YES];
+        [[self diaryPlayerView] addSubview:[self diaryArtistLabel]];
+
+        [[self diaryArtistLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryArtistLabel.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor constant:-24],
+            [self.diaryArtistLabel.leadingAnchor constraintEqualToAnchor:self.diaryArtworkView.trailingAnchor constant:24],
+            [self.diaryArtistLabel.trailingAnchor constraintEqualToAnchor:self.diaryPlayerView.trailingAnchor constant:-24],
+        ]];
+
+
+        // song title label
+        self.diarySongTitleLabel = [UILabel new];
+        [[self diarySongTitleLabel] setTextColor:[UIColor whiteColor]];
+        if ([fontFamilyValue intValue] == 0) [[self diarySongTitleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:23]];
+        else if ([fontFamilyValue intValue] == 1) [[self diarySongTitleLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:23]];
+        else if ([fontFamilyValue intValue] == 2) [[self diarySongTitleLabel] setFont:[UIFont systemFontOfSize:23 weight:UIFontWeightRegular]];
+        [[self diarySongTitleLabel] setTextAlignment:NSTextAlignmentLeft];
+        [[self diarySongTitleLabel] setMarqueeEnabled:YES];
+        [[self diarySongTitleLabel] setMarqueeRunning:YES];
+        [[self diaryPlayerView] addSubview:[self diarySongTitleLabel]];
+
+        [[self diarySongTitleLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diarySongTitleLabel.bottomAnchor constraintEqualToAnchor:self.diaryArtistLabel.topAnchor constant:-2],
+            [self.diarySongTitleLabel.leadingAnchor constraintEqualToAnchor:self.diaryArtworkView.trailingAnchor constant:24],
+            [self.diarySongTitleLabel.trailingAnchor constraintEqualToAnchor:self.diaryPlayerView.trailingAnchor constant:-24],
+        ]];
+    } else if ([overrideTimeDateStyleValue intValue] == 1) {
+        // player view
+        self.diaryPlayerView = [UIView new];
+        [[self diaryPlayerView] setBackgroundColor:[[GcColorPickerUtils colorWithHex:customMediaPlayerBackgroundColorValue] colorWithAlphaComponent:[mediaPlayerBackgroundAmountValue doubleValue]]];
+        [[self diaryPlayerView] setHidden:YES];
+        [self addSubview:[self diaryPlayerView]];
+
+        [[self diaryPlayerView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryPlayerView.topAnchor constraintEqualToAnchor:self.topAnchor],
+            [self.diaryPlayerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+            [self.diaryPlayerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+            [self.diaryPlayerView.heightAnchor constraintEqualToConstant:80 + [mediaPlayerOffsetValue doubleValue]],
+        ]];
+
+
+        // artwork
+        self.diaryArtworkView = [UIImageView new];
+        [[self diaryArtworkView] setContentMode:UIViewContentModeScaleAspectFill];
+        [[self diaryArtworkView] setClipsToBounds:YES];
+        [[self diaryPlayerView] addSubview:[self diaryArtworkView]];
+
+        [[self diaryArtworkView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryArtworkView.leadingAnchor constraintEqualToAnchor:self.diaryPlayerView.leadingAnchor],
+            [self.diaryArtworkView.bottomAnchor constraintEqualToAnchor:self.diaryPlayerView.bottomAnchor],
+            [self.diaryArtworkView.widthAnchor constraintEqualToConstant:80],
+            [self.diaryArtworkView.heightAnchor constraintEqualToConstant:80],
+        ]];
+
+
+        // music controls view
+        self.diaryMusicControlsView = [UIView new];
+        [[self diaryPlayerView] addSubview:[self diaryMusicControlsView]];
+
+        [[self diaryMusicControlsView] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryMusicControlsView.centerYAnchor constraintEqualToAnchor:self.diaryArtworkView.centerYAnchor],
+            [self.diaryMusicControlsView.leadingAnchor constraintEqualToAnchor:self.diaryPlayerView.centerXAnchor constant:40],
+            [self.diaryMusicControlsView.trailingAnchor constraintEqualToAnchor:self.diaryPlayerView.trailingAnchor constant:-12],
+            [self.diaryMusicControlsView.heightAnchor constraintEqualToConstant:40],
+        ]];
+
+
+        // rewind button
+        self.diaryRewindButton = [UIButton new];
+        [[self diaryRewindButton] addTarget:self action:@selector(rewindSong) forControlEvents:UIControlEventTouchUpInside];
+        [[self diaryRewindButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/rewind.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [[self diaryRewindButton] setTintColor:[UIColor whiteColor]];
+        [[self diaryRewindButton] setAdjustsImageWhenHighlighted:NO];
+        [[self diaryRewindButton] setImageEdgeInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
+        [[self diaryMusicControlsView] addSubview:[self diaryRewindButton]];
+
+        [[self diaryRewindButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryRewindButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
+            [self.diaryRewindButton.leadingAnchor constraintEqualToAnchor:self.diaryMusicControlsView.leadingAnchor],
+            [self.diaryRewindButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
+            [self.diaryRewindButton.widthAnchor constraintEqualToConstant:40],
+        ]];
+
+
+        // pause button
+        self.diaryPauseButton = [UIButton new];
+        [[self diaryPauseButton] addTarget:self action:@selector(pausePlaySong) forControlEvents:UIControlEventTouchUpInside];
+        [[self diaryPauseButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/pause.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [[self diaryPauseButton] setTintColor:[UIColor whiteColor]];
+        [[self diaryPauseButton] setAdjustsImageWhenHighlighted:NO];
+        [[self diaryPauseButton] setImageEdgeInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
+        [[self diaryMusicControlsView] addSubview:[self diaryPauseButton]];
+
+        [[self diaryPauseButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryPauseButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
+            [self.diaryPauseButton.centerXAnchor constraintEqualToAnchor:self.diaryMusicControlsView.centerXAnchor],
+            [self.diaryPauseButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
+            [self.diaryPauseButton.widthAnchor constraintEqualToConstant:40],
+        ]];
+
+
+        // skip button
+        self.diarySkipButton = [UIButton new];
+        [[self diarySkipButton] addTarget:self action:@selector(skipSong) forControlEvents:UIControlEventTouchUpInside];
+        [[self diarySkipButton] setImage:[[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/DiaryPreferences.bundle/music_controls/skip.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [[self diarySkipButton] setTintColor:[UIColor whiteColor]];
+        [[self diarySkipButton] setAdjustsImageWhenHighlighted:NO];
+        [[self diarySkipButton] setImageEdgeInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
+        [[self diaryMusicControlsView] addSubview:[self diarySkipButton]];
+
+        [[self diarySkipButton] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diarySkipButton.topAnchor constraintEqualToAnchor:self.diaryMusicControlsView.topAnchor],
+            [self.diarySkipButton.trailingAnchor constraintEqualToAnchor:self.diaryMusicControlsView.trailingAnchor],
+            [self.diarySkipButton.bottomAnchor constraintEqualToAnchor:self.diaryMusicControlsView.bottomAnchor],
+            [self.diarySkipButton.widthAnchor constraintEqualToConstant:40],
+        ]];
+
+
+        // song title label
+        self.diarySongTitleLabel = [UILabel new];
+        [[self diarySongTitleLabel] setTextColor:[UIColor whiteColor]];
+        if ([fontFamilyValue intValue] == 0) [[self diarySongTitleLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:22]];
+        else if ([fontFamilyValue intValue] == 1) [[self diarySongTitleLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:22]];
+        else if ([fontFamilyValue intValue] == 2) [[self diarySongTitleLabel] setFont:[UIFont systemFontOfSize:22 weight:UIFontWeightRegular]];
+        [[self diarySongTitleLabel] setTextAlignment:NSTextAlignmentLeft];
+        [[self diarySongTitleLabel] setMarqueeEnabled:YES];
+        [[self diarySongTitleLabel] setMarqueeRunning:YES];
+        [[self diaryPlayerView] addSubview:[self diarySongTitleLabel]];
+
+        [[self diarySongTitleLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diarySongTitleLabel.centerYAnchor constraintEqualToAnchor:self.diaryArtworkView.centerYAnchor constant:-12],
+            [self.diarySongTitleLabel.leadingAnchor constraintEqualToAnchor:self.diaryArtworkView.trailingAnchor constant:12],
+            [self.diarySongTitleLabel.trailingAnchor constraintEqualToAnchor:self.diaryMusicControlsView.leadingAnchor constant:-4],
+        ]];
+
+
+        // artist label
+        self.diaryArtistLabel = [UILabel new];
+        [[self diaryArtistLabel] setTextColor:[UIColor whiteColor]];
+        if ([fontFamilyValue intValue] == 0) [[self diaryArtistLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:17]];
+        else if ([fontFamilyValue intValue] == 1) [[self diaryArtistLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:17]];
+        else if ([fontFamilyValue intValue] == 2) [[self diaryArtistLabel] setFont:[UIFont systemFontOfSize:17 weight:UIFontWeightRegular]];
+        [[self diaryArtistLabel] setTextAlignment:NSTextAlignmentLeft];
+        [[self diaryArtistLabel] setMarqueeEnabled:YES];
+        [[self diaryArtistLabel] setMarqueeRunning:YES];
+        [[self diaryPlayerView] addSubview:[self diaryArtistLabel]];
+
+        [[self diaryArtistLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryArtistLabel.centerYAnchor constraintEqualToAnchor:self.diaryArtworkView.centerYAnchor constant:12],
+            [self.diaryArtistLabel.leadingAnchor constraintEqualToAnchor:self.diaryArtworkView.trailingAnchor constant:12],
+            [self.diaryArtistLabel.trailingAnchor constraintEqualToAnchor:self.diaryMusicControlsView.leadingAnchor constant:-4],
+        ]];
+    }
 
 }
 
