@@ -1215,6 +1215,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
 	%orig;
 
+    [coverSheetView resetDiaryViewTransform];
 	[self requestDiaryTimeAndDateUpdate];
     if (enableUpNextSwitch && [coverSheetView diaryView]) {
         if ([defaultEventsValue intValue] == 0) [coverSheetView fetchNextCalendarEvent];
