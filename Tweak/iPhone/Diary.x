@@ -2603,9 +2603,15 @@ SBFWallpaperView* lockscreenWallpaper = nil;
         [[self usernameLabel] setAlpha:0];
         [[self passcodeEntryView] setAlpha:0];
 
-        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [lockscreenWallpaper setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
-        } completion:nil];
+        if (!enableSpotlightSwitch) {
+            [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                [lockscreenWallpaper setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
+            } completion:nil];
+        } else {
+            [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                [[coverSheetView diarySpotlightWallpaperView] setTransform:CGAffineTransformMakeScale(1.05, 1.05)];
+            } completion:nil];
+        }
 
         [UIView animateWithDuration:0.6 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             [[self backgroundBlurView] setAlpha:1];
@@ -2617,9 +2623,15 @@ SBFWallpaperView* lockscreenWallpaper = nil;
             [[self passcodeEntryView] setAlpha:1];
         } completion:nil];
     } else {
-        [UIView animateWithDuration:0.5 delay:0.2 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            [lockscreenWallpaper setTransform:CGAffineTransformMakeScale(1, 1)];
-        } completion:nil];
+        if (!enableSpotlightSwitch) {
+            [UIView animateWithDuration:0.5 delay:0.2 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                [lockscreenWallpaper setTransform:CGAffineTransformIdentity];
+            } completion:nil];
+        } else {
+            [UIView animateWithDuration:0.5 delay:0.2 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                [[coverSheetView diarySpotlightWallpaperView] setTransform:CGAffineTransformIdentity];
+            } completion:nil];
+        }
         
         [UIView animateWithDuration:0.25 delay:0.15 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             [[self backgroundBlurView] setAlpha:0];
@@ -2735,6 +2747,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     %orig;
 
+    if (enableSpotlightSwitch) return;
     lockscreenWallpaper = [self lockscreenWallpaperView];
 
 }
