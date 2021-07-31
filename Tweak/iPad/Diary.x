@@ -1884,12 +1884,12 @@ SBFWallpaperView* lockscreenWallpaper = nil;
                     } else {
                         [[coverSheetView diaryArtworkView] setImage:artwork];
                     }
-                    [[coverSheetView diaryPlayerView] setBackgroundColor:[libKitten backgroundColor:artwork]];
+                    if (adaptiveMediaPlayerBackgroundSwitch) [[coverSheetView diaryPlayerView] setBackgroundColor:[libKitten backgroundColor:artwork]];
                 }
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoTitle]) [[coverSheetView diarySongTitleLabel] setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoTitle]]];
                 if (dict[(__bridge NSString *)kMRMediaRemoteNowPlayingInfoArtist])[[coverSheetView diaryArtistLabel] setText:[NSString stringWithFormat:@"%@", [dict objectForKey:(__bridge NSString*)kMRMediaRemoteNowPlayingInfoArtist]]];
 
-                if (adaptiveMediaPlayerBackgroundSwitch) [[coverSheetView diaryPlayerView] setHidden:NO];
+                [[coverSheetView diaryPlayerView] setHidden:NO];
             }
         } else {
             [[coverSheetView diaryPlayerView] setHidden:YES];
