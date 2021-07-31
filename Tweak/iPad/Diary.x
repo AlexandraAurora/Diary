@@ -1025,7 +1025,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
         if (translation.y <= -200) [[%c(SBLockScreenManager) sharedInstance] unlockUIFromSource:17 withOptions:nil];
     } else if ([recognizer state] == UIGestureRecognizerStateEnded) {
         if ([[%c(SBLockScreenManager) sharedInstance] _isPasscodeVisible]) return;
-        
+        [self resetDiaryViewTransform];
     }
 
 }
