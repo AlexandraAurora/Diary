@@ -11,6 +11,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     if (coverSheetView) return %orig;
     id orig = %orig;
+
     coverSheetView = self;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFrameAfterRotation) name:@"diaryRotateNotification" object:nil];
@@ -124,7 +125,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
 %hook SpringBoard
 
-- (void)noteInterfaceOrientationChanged:(long long)arg1 duration:(double)arg2 logMessage:(id)arg3 { // update frame of some elements when rotated
+- (void)noteInterfaceOrientationChanged:(long long)arg1 duration:(double)arg2 logMessage:(id)arg3 { // update the frame of some elements when rotated
 
 	%orig;
 
