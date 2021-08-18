@@ -1,6 +1,7 @@
 #import "Diary.h"
 
 CSCoverSheetView* coverSheetView = nil;
+SBFLockScreenDateView* timeDateView = nil;
 SBFWallpaperView* lockscreenWallpaper = nil;
 
 %group DiaryGlobal
@@ -166,6 +167,14 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 %end
 
 %hook CSCoverSheetViewController
+
+- (void)viewDidLoad { // lastlook support
+
+    %orig;
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/LastLook.dylib"]) [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestDiaryTimeAndDateUpdate) name:@"requestDiaryTimeAndDateUpdate" object:nil];
+
+}
 
 - (void)_transitionChargingViewToVisible:(BOOL)arg1 showBattery:(BOOL)arg2 animated:(BOOL)arg3 { // hide charging view
 
@@ -405,6 +414,80 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 %end
 
 %group DiaryTimeAndDate
+
+%hook SBFLockScreenDateView
+
+%property(nonatomic, retain)UILabel* diaryTimeLabel;
+%property(nonatomic, retain)UILabel* diaryDateLabel;
+
+- (id)initWithFrame:(CGRect)frame { // get an instance of SBFLockScreenDateView
+
+    id orig = %orig;
+
+    if ([overrideTimeDateStyleValue intValue] == 1) timeDateView = self;
+
+    return orig;
+
+}
+
+- (void)didMoveToWindow { // add the windows 11 style time
+
+    %orig;
+
+    if ([overrideTimeDateStyleValue intValue] == 1) {
+        // time label
+        self.diaryTimeLabel = [UILabel new];
+        [[self diaryTimeLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
+        if ([fontFamilyValue intValue] == 0) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:100]];
+        else if ([fontFamilyValue intValue] == 1) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:100]];
+        else if ([fontFamilyValue intValue] == 2) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:100 weight:UIFontWeightMedium]];
+        [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentCenter];
+        [self addSubview:[self diaryTimeLabel]];
+
+        [[self diaryTimeLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryTimeLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:32],
+            [self.diaryTimeLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+            [self.diaryTimeLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        ]];
+
+
+        // date label
+        self.diaryDateLabel = [UILabel new];
+        [[self diaryDateLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
+        if ([fontFamilyValue intValue] == 0) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:22]];
+        else if ([fontFamilyValue intValue] == 1) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:22]];
+        else if ([fontFamilyValue intValue] == 2) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:22 weight:UIFontWeightMedium]];
+        [[self diaryDateLabel] setTextAlignment:NSTextAlignmentCenter];
+        [self addSubview:[self diaryDateLabel]];
+
+        [[self diaryDateLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.diaryDateLabel.topAnchor constraintEqualToAnchor:self.diaryTimeLabel.bottomAnchor constant:8],
+            [self.diaryDateLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+            [self.diaryDateLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        ]];
+    }
+
+}
+
+%new
+- (void)updateDiaryTimeAndDate { // update diary
+
+    NSDateFormatter* timeFormat = [NSDateFormatter new];
+    [timeFormat setDateFormat:timeFormatValue];
+    [[self diaryTimeLabel] setText:[timeFormat stringFromDate:[NSDate date]]];
+
+    if (!isTimerRunning) {
+        NSDateFormatter* dateFormat = [NSDateFormatter new];
+        [dateFormat setDateFormat:dateFormatValue];
+        if (useCustomDateLocaleSwitch) [dateFormat setLocale:[[NSLocale alloc] initWithLocaleIdentifier:customDateLocaleValue]];
+        [[self diaryDateLabel] setText:[dateFormat stringFromDate:[NSDate date]]];
+    }
+    
+}
+
+%end
 
 %hook CSCoverSheetView
 
@@ -651,39 +734,6 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
 
         [self layoutTimeAndDate];
-    } else if ([overrideTimeDateStyleValue intValue] == 1) {
-        // time label
-        self.diaryTimeLabel = [UILabel new];
-        [[self diaryTimeLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
-        if ([fontFamilyValue intValue] == 0) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:100]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:100]];
-        else if ([fontFamilyValue intValue] == 2) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:100 weight:UIFontWeightMedium]];
-        [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentCenter];
-        [[self diaryView] addSubview:[self diaryTimeLabel]];
-
-        [[self diaryTimeLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [NSLayoutConstraint activateConstraints:@[
-            [self.diaryTimeLabel.topAnchor constraintEqualToAnchor:self.diaryView.topAnchor constant:124],
-            [self.diaryTimeLabel.leadingAnchor constraintEqualToAnchor:self.diaryView.leadingAnchor],
-            [self.diaryTimeLabel.trailingAnchor constraintEqualToAnchor:self.diaryView.trailingAnchor],
-        ]];
-
-
-        // date label
-        self.diaryDateLabel = [UILabel new];
-        [[self diaryDateLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
-        if ([fontFamilyValue intValue] == 0) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:22]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:22]];
-        else if ([fontFamilyValue intValue] == 2) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:22 weight:UIFontWeightMedium]];
-        [[self diaryDateLabel] setTextAlignment:NSTextAlignmentCenter];
-        [[self diaryView] addSubview:[self diaryDateLabel]];
-
-        [[self diaryDateLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [NSLayoutConstraint activateConstraints:@[
-            [self.diaryDateLabel.topAnchor constraintEqualToAnchor:self.diaryTimeLabel.bottomAnchor],
-            [self.diaryDateLabel.leadingAnchor constraintEqualToAnchor:self.diaryView.leadingAnchor],
-            [self.diaryDateLabel.trailingAnchor constraintEqualToAnchor:self.diaryView.trailingAnchor],
-        ]];
     }
 
 
@@ -1005,8 +1055,16 @@ SBFWallpaperView* lockscreenWallpaper = nil;
     if ([recognizer state] == UIGestureRecognizerStateChanged) {
         translation = [recognizer translationInView:[self diaryView]];
         if (translation.y > 0) return;
+        double substractedAlpha = fabs(translation.y / 200);
+
         [UIView animateWithDuration:0.1 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             [[self diaryView] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
+            if ([overrideTimeDateStyleValue intValue] == 1) {
+                [[timeDateView diaryTimeLabel] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
+                [[timeDateView diaryDateLabel] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
+                [[timeDateView diaryTimeLabel] setAlpha:1 - substractedAlpha];
+                [[timeDateView diaryDateLabel] setAlpha:1 - substractedAlpha];
+            }
             if (enableMediaPlayerSwitch) [[self diaryPlayerView] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
             if (enableUpNextSwitch) {
                 [[self diaryCalendarButton] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
@@ -1015,7 +1073,6 @@ SBFWallpaperView* lockscreenWallpaper = nil;
             }
         } completion:nil];
         
-        double substractedAlpha = fabs(translation.y / 200);
         [[self diaryView] setAlpha:1 - substractedAlpha];
         if (enableMediaPlayerSwitch) [[self diaryPlayerView] setAlpha:1 - substractedAlpha];
         if (enableUpNextSwitch) {
@@ -1036,9 +1093,17 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [[self diaryView] setTransform:CGAffineTransformIdentity];
-        if (enableMediaPlayerSwitch) [[self diaryPlayerView] setTransform:CGAffineTransformIdentity];
         [[self diaryView] setAlpha:1];
-        if (enableMediaPlayerSwitch) [[self diaryPlayerView] setAlpha:1];
+        if ([overrideTimeDateStyleValue intValue] == 1) {
+            [[timeDateView diaryTimeLabel] setTransform:CGAffineTransformIdentity];
+            [[timeDateView diaryDateLabel] setTransform:CGAffineTransformIdentity];
+            [[timeDateView diaryTimeLabel] setAlpha:1];
+            [[timeDateView diaryDateLabel] setAlpha:1];
+        }
+        if (enableMediaPlayerSwitch) {
+            [[self diaryPlayerView] setTransform:CGAffineTransformIdentity];
+            [[self diaryPlayerView] setAlpha:1];
+        }
         if (enableUpNextSwitch) {
             if (showCalendarEventButtonSwitch) {
                 [[self diaryCalendarButton] setTransform:CGAffineTransformIdentity];
@@ -1065,6 +1130,16 @@ SBFWallpaperView* lockscreenWallpaper = nil;
         CGRect diaryViewFrame = [[self diaryView] frame];
         diaryViewFrame.origin.y -= 35;
         [[self diaryView] setFrame:diaryViewFrame];
+
+        if ([overrideTimeDateStyleValue intValue] == 1) {
+            CGRect timeLabelFrame = [[timeDateView diaryTimeLabel] frame];
+            timeLabelFrame.origin.y -= 35;
+            [[timeDateView diaryTimeLabel] setFrame:timeLabelFrame];
+
+            CGRect dateLabelFrame = [[timeDateView diaryDateLabel] frame];
+            dateLabelFrame.origin.y -= 35;
+            [[timeDateView diaryDateLabel] setFrame:dateLabelFrame];
+        }
 
         if (enableUpNextSwitch) {
             if (showCalendarEventButtonSwitch) {
@@ -1096,6 +1171,16 @@ SBFWallpaperView* lockscreenWallpaper = nil;
             CGRect diaryViewFrame = [[self diaryView] frame];
             diaryViewFrame.origin.y += 35;
             [[self diaryView] setFrame:diaryViewFrame];
+
+            if ([overrideTimeDateStyleValue intValue] == 1) {
+                CGRect timeLabelFrame = [[timeDateView diaryTimeLabel] frame];
+                timeLabelFrame.origin.y += 35;
+                [[timeDateView diaryTimeLabel] setFrame:timeLabelFrame];
+
+                CGRect dateLabelFrame = [[timeDateView diaryDateLabel] frame];
+                dateLabelFrame.origin.y += 35;
+                [[timeDateView diaryDateLabel] setFrame:dateLabelFrame];
+            }
             
             if (enableUpNextSwitch) {
                 if (showCalendarEventButtonSwitch) {
@@ -1165,7 +1250,8 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 %new
 - (void)requestDiaryTimeAndDateUpdate { // update diary
 
-    [coverSheetView updateDiaryTimeAndDate];
+    if ([overrideTimeDateStyleValue intValue] == 0) [coverSheetView updateDiaryTimeAndDate];
+    else if ([overrideTimeDateStyleValue intValue] == 1) [timeDateView updateDiaryTimeAndDate];
     
 }
 
@@ -1194,7 +1280,8 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 %new
 - (void)requestDiaryTimeAndDateUpdate { // update diary
 
-    [coverSheetView updateDiaryTimeAndDate];
+    if ([overrideTimeDateStyleValue intValue] == 0) [coverSheetView updateDiaryTimeAndDate];
+    else if ([overrideTimeDateStyleValue intValue] == 1) [timeDateView updateDiaryTimeAndDate];
     
 }
 
@@ -1574,12 +1661,12 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     if ([overrideTimeDateStyleValue intValue] == 1) {
         [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            [[self diaryTimeLabel] setAlpha:0];
-            [[self diaryDateLabel] setAlpha:0];
+            [[timeDateView diaryTimeLabel] setAlpha:0];
+            [[timeDateView diaryDateLabel] setAlpha:0];
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.25 delay:0.8 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                [[self diaryTimeLabel] setAlpha:1];
-                [[self diaryDateLabel] setAlpha:1];
+                [[timeDateView diaryTimeLabel] setAlpha:1];
+                [[timeDateView diaryDateLabel] setAlpha:1];
             } completion:nil];
         }];
     }

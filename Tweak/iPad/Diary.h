@@ -114,6 +114,11 @@ BOOL hideDefaultUnlockTextSwitch = YES;
 BOOL hideDefaultHomebarSwitch = YES;
 BOOL hideDefaultPageDotsSwitch = YES;
 
+@interface SBFLockScreenDateView : UIView
+@property(nonatomic, retain)UILabel* diaryTimeLabel;
+@property(nonatomic, retain)UILabel* diaryDateLabel;
+- (void)updateDiaryTimeAndDate;
+@end
 
 @interface CSCoverSheetView : UIView
 @property(nonatomic, retain)UIView* diaryView;
@@ -208,9 +213,6 @@ BOOL hideDefaultPageDotsSwitch = YES;
 @end
 
 @interface SBUIProudLockIconView : UIView
-@end
-
-@interface SBFLockScreenDateView : UIView
 @end
 
 @interface SBUILegibilityLabel : UILabel

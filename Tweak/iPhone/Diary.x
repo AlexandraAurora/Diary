@@ -197,6 +197,14 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
 %hook CSCoverSheetViewController
 
+- (void)viewDidLoad { // lastlook support
+
+    %orig;
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:@"/Library/MobileSubstrate/DynamicLibraries/LastLook.dylib"]) [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestDiaryTimeAndDateUpdate) name:@"requestDiaryTimeAndDateUpdate" object:nil];
+
+}
+
 - (void)_transitionChargingViewToVisible:(BOOL)arg1 showBattery:(BOOL)arg2 animated:(BOOL)arg3 { // hide charging view
 
 	if (hideChargingViewSwitch)
@@ -1136,11 +1144,15 @@ SBFWallpaperView* lockscreenWallpaper = nil;
     if ([recognizer state] == UIGestureRecognizerStateChanged) {
         translation = [recognizer translationInView:[self diaryView]];
         if (translation.y > 0) return;
+        double substractedAlpha = fabs(translation.y / 200);
+        
         [UIView animateWithDuration:0.1 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             [[self diaryView] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
             if ([overrideTimeDateStyleValue intValue] == 1) {
                 [[timeDateView diaryTimeLabel] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
                 [[timeDateView diaryDateLabel] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
+                [[timeDateView diaryTimeLabel] setAlpha:1 - substractedAlpha];
+                [[timeDateView diaryDateLabel] setAlpha:1 - substractedAlpha];
             }
             if (enableUpNextSwitch) {
                 [[self diaryCalendarButton] setTransform:CGAffineTransformMakeTranslation(0, translation.y)];
@@ -1149,7 +1161,6 @@ SBFWallpaperView* lockscreenWallpaper = nil;
             }
         } completion:nil];
         
-        double substractedAlpha = fabs(translation.y / 200);
         [[self diaryView] setAlpha:1 - substractedAlpha];
         if (enableUpNextSwitch) {
             if (showCalendarEventButtonSwitch) [[self diaryCalendarButton] setAlpha:1 - substractedAlpha];
@@ -1169,11 +1180,13 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [[self diaryView] setTransform:CGAffineTransformIdentity];
+        [[self diaryView] setAlpha:1];
         if ([overrideTimeDateStyleValue intValue] == 1) {
             [[timeDateView diaryTimeLabel] setTransform:CGAffineTransformIdentity];
             [[timeDateView diaryDateLabel] setTransform:CGAffineTransformIdentity];
+            [[timeDateView diaryTimeLabel] setAlpha:1];
+            [[timeDateView diaryDateLabel] setAlpha:1];
         }
-        [[self diaryView] setAlpha:1];
         if (enableUpNextSwitch) {
             if (showCalendarEventButtonSwitch) {
                 [[self diaryCalendarButton] setTransform:CGAffineTransformIdentity];
@@ -1723,12 +1736,12 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     if ([overrideTimeDateStyleValue intValue] == 1) {
         [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            [[self diaryTimeLabel] setAlpha:0];
-            [[self diaryDateLabel] setAlpha:0];
+            [[timeDateView diaryTimeLabel] setAlpha:0];
+            [[timeDateView diaryDateLabel] setAlpha:0];
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.25 delay:0.8 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                [[self diaryTimeLabel] setAlpha:1];
-                [[self diaryDateLabel] setAlpha:1];
+                [[timeDateView diaryTimeLabel] setAlpha:1];
+                [[timeDateView diaryDateLabel] setAlpha:1];
             } completion:nil];
         }];
     }
