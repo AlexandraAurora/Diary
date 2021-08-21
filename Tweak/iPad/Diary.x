@@ -434,40 +434,41 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     %orig;
 
-    if ([overrideTimeDateStyleValue intValue] == 1) {
-        // time label
-        self.diaryTimeLabel = [UILabel new];
-        [[self diaryTimeLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
-        if ([fontFamilyValue intValue] == 0) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:100]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:100]];
-        else if ([fontFamilyValue intValue] == 2) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:100 weight:UIFontWeightMedium]];
-        [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentCenter];
-        [self addSubview:[self diaryTimeLabel]];
-
-        [[self diaryTimeLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [NSLayoutConstraint activateConstraints:@[
-            [self.diaryTimeLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:32],
-            [self.diaryTimeLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-            [self.diaryTimeLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-        ]];
+    if ([self diaryTimeLabel] || [overrideTimeDateStyleValue intValue] != 1) return;
 
 
-        // date label
-        self.diaryDateLabel = [UILabel new];
-        [[self diaryDateLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
-        if ([fontFamilyValue intValue] == 0) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:22]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:22]];
-        else if ([fontFamilyValue intValue] == 2) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:22 weight:UIFontWeightMedium]];
-        [[self diaryDateLabel] setTextAlignment:NSTextAlignmentCenter];
-        [self addSubview:[self diaryDateLabel]];
+    // time label
+    self.diaryTimeLabel = [UILabel new];
+    [[self diaryTimeLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
+    if ([fontFamilyValue intValue] == 0) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:100]];
+    else if ([fontFamilyValue intValue] == 1) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:100]];
+    else if ([fontFamilyValue intValue] == 2) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:100 weight:UIFontWeightMedium]];
+    [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentCenter];
+    [self addSubview:[self diaryTimeLabel]];
 
-        [[self diaryDateLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [NSLayoutConstraint activateConstraints:@[
-            [self.diaryDateLabel.topAnchor constraintEqualToAnchor:self.diaryTimeLabel.bottomAnchor constant:8],
-            [self.diaryDateLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-            [self.diaryDateLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-        ]];
-    }
+    [[self diaryTimeLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [NSLayoutConstraint activateConstraints:@[
+        [self.diaryTimeLabel.topAnchor constraintEqualToAnchor:self.topAnchor constant:32],
+        [self.diaryTimeLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [self.diaryTimeLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    ]];
+
+
+    // date label
+    self.diaryDateLabel = [UILabel new];
+    [[self diaryDateLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
+    if ([fontFamilyValue intValue] == 0) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:22]];
+    else if ([fontFamilyValue intValue] == 1) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:22]];
+    else if ([fontFamilyValue intValue] == 2) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:22 weight:UIFontWeightMedium]];
+    [[self diaryDateLabel] setTextAlignment:NSTextAlignmentCenter];
+    [self addSubview:[self diaryDateLabel]];
+
+    [[self diaryDateLabel] setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [NSLayoutConstraint activateConstraints:@[
+        [self.diaryDateLabel.topAnchor constraintEqualToAnchor:self.diaryTimeLabel.bottomAnchor constant:8],
+        [self.diaryDateLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [self.diaryDateLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    ]];
 
 }
 

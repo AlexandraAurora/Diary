@@ -460,29 +460,29 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     %orig;
 
-    if ([overrideTimeDateStyleValue intValue] == 1) {
-        // time label
-        self.diaryTimeLabel = [UILabel new];
-        [[self diaryTimeLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
-        if ([fontFamilyValue intValue] == 0) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:78]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:78]];
-        else if ([fontFamilyValue intValue] == 2) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:78 weight:UIFontWeightMedium]];
-        [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentCenter];
-        [self addSubview:[self diaryTimeLabel]];
+    if ([self diaryTimeLabel] || [overrideTimeDateStyleValue intValue] != 1) return;
+
+    // time label
+    self.diaryTimeLabel = [UILabel new];
+    [[self diaryTimeLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
+    if ([fontFamilyValue intValue] == 0) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:78]];
+    else if ([fontFamilyValue intValue] == 1) [[self diaryTimeLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:78]];
+    else if ([fontFamilyValue intValue] == 2) [[self diaryTimeLabel] setFont:[UIFont systemFontOfSize:78 weight:UIFontWeightMedium]];
+    [[self diaryTimeLabel] setTextAlignment:NSTextAlignmentCenter];
+    [self addSubview:[self diaryTimeLabel]];
 
 
-        // date label
-        self.diaryDateLabel = [UILabel new];
-        [[self diaryDateLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
-        if ([fontFamilyValue intValue] == 0) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:20]];
-        else if ([fontFamilyValue intValue] == 1) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:20]];
-        else if ([fontFamilyValue intValue] == 2) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:20 weight:UIFontWeightMedium]];
-        [[self diaryDateLabel] setTextAlignment:NSTextAlignmentCenter];
-        [self addSubview:[self diaryDateLabel]];
+    // date label
+    self.diaryDateLabel = [UILabel new];
+    [[self diaryDateLabel] setTextColor:[GcColorPickerUtils colorWithHex:timeDateColorValue]];
+    if ([fontFamilyValue intValue] == 0) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"Selawik-Regular" size:20]];
+    else if ([fontFamilyValue intValue] == 1) [[self diaryDateLabel] setFont:[UIFont fontWithName:@"OpenSans-Regular" size:20]];
+    else if ([fontFamilyValue intValue] == 2) [[self diaryDateLabel] setFont:[UIFont systemFontOfSize:20 weight:UIFontWeightMedium]];
+    [[self diaryDateLabel] setTextAlignment:NSTextAlignmentCenter];
+    [self addSubview:[self diaryDateLabel]];
 
         
-        [self layoutTimeAndDate];
-    }
+     [self layoutTimeAndDate];
 
 }
 
