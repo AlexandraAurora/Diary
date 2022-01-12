@@ -10,6 +10,9 @@ Dear diary..
   - Depends on [libKitten](https://github.com/schneelittchen/libKitten), [libPDDokdo](https://github.com/s8ngyu/libpddokdo) and [libGCUniversal](https://github.com/MrGcGamer/LibGcUniversalDocumentation)
   - You may want to edit the root `Makefile` to use your Theos SDK and toolchain
 
+## Compatibility
+iPhone, iPad and iPod running iOS/iPadOS 13 or later
+
 ## License
 If you take code from this repository please link it, or my [Twitter](https://twitter.com/schneelittchen) to your project<br>
 You may not redistribute this source code or packages from it<br>
