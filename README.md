@@ -1,4 +1,4 @@
-# Diary
+# Diary 📖
 Dear diary..
 
 ## Installation
