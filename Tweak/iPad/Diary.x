@@ -2735,7 +2735,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
     // miscellaneous
     [preferences registerBool:&useCustomZIndexSwitch default:NO forKey:@"useCustomZIndex"];
     [preferences registerObject:&customZIndexValue default:@"0" forKey:@"customZIndex"];
-    [preferences registerObject:&fontFamilyValue default:@"0" forKey:@"fontFamily"];
+    [preferences registerObject:&fontFamilyValue default:@"1" forKey:@"fontFamily"];
     [preferences registerObject:&notificationOffsetValue default:@"0" forKey:@"notificationOffset"];
     [preferences registerBool:&hideChargingViewSwitch default:YES forKey:@"hideChargingView"];
     [preferences registerBool:&disableTodaySwipeSwitch default:NO forKey:@"disableTodaySwipe"];

@@ -96,7 +96,7 @@ BOOL automaticallyFocusTheEntryFieldSwitch = YES;
 
 // miscellaneous
 NSString* overrideStyleValue = @"0";
-NSString* fontFamilyValue = @"0";
+NSString* fontFamilyValue = @"1";
 BOOL useCustomZIndexSwitch = NO;
 NSString* customZIndexValue = @"0";
 NSString* notificationOffsetValue = @"0";
