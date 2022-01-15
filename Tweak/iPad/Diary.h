@@ -7,7 +7,7 @@
 #import "GcUniversal/GcImagePickerUtils.h"
 #import "GcUniversal/GcColorPickerUtils.h"
 #import <Kitten/libKitten.h>
-#import "../DRYLocalization.h"
+#import "../Utils/DRYLocalization.h"
 #import <Cephei/HBPreferences.h>
 
 HBPreferences* preferences = nil;
