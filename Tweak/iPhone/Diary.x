@@ -2887,6 +2887,9 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
 	%orig;
 
+    [passcodeLeaveTimer invalidate];
+    passcodeLeaveTimer = nil;
+    
 	if (arg1) [[NSNotificationCenter defaultCenter] postNotificationName:@"diaryBiometricPasscodeAuthentication" object:nil];
 
 }
