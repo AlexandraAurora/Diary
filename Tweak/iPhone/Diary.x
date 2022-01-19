@@ -2774,7 +2774,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
     [passcodeLeaveTimer invalidate];
     passcodeLeaveTimer = nil;
-    
+
     if ([[%c(SBLockScreenManager) sharedInstance] isUILocked]) [self showIncorrectPasswordView];
     if ((([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1) && [[[self passcodeEntryField] text] length] < 4) || ([passcodeTypeValue intValue] == 2 && [[[self passcodeEntryField] text] length] == 0)) return;
     [[%c(SBLockScreenManager) sharedInstance] attemptUnlockWithPasscode:[NSString stringWithFormat:@"%@", [[self passcodeEntryField] text]] finishUIUnlock:1 completion:nil];
@@ -2801,7 +2801,13 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 %new
 - (void)showIncorrectPasswordView { // show the incorrect password view
 
-    if ([[[self passcodeEntryField] text] length] == 0) return;
+    if ([[[self passcodeEntryField] text] length] == 0) {
+        if ([[DRYLocalization stringForKey:@"PROVIDE_PASSWORD"] isEqual:nil]) [[self incorrectPasswordLabel] setText:@"Provide a PIN."];
+        else if (![[DRYLocalization stringForKey:@"PROVIDE_PASSWORD"] isEqual:nil]) [[self incorrectPasswordLabel] setText:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"PROVIDE_PASSWORD"]]];
+    } else {
+        if ([[DRYLocalization stringForKey:@"INCORRECT_PASSWORD"] isEqual:nil]) [[self incorrectPasswordLabel] setText:@"The password is incorrect. Try again."];
+        else if (![[DRYLocalization stringForKey:@"INCORRECT_PASSWORD"] isEqual:nil]) [[self incorrectPasswordLabel] setText:[NSString stringWithFormat:@"%@", [DRYLocalization stringForKey:@"INCORRECT_PASSWORD"]]];
+    }
     [[self passcodeEntryField] resignFirstResponder];
     [[self incorrectPasswordLabel] setHidden:NO];
     [[self incorrectPasswordButton] setHidden:NO];
