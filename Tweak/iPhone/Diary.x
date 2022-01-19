@@ -2522,7 +2522,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
         // text field
         self.passcodeEntryField = [UITextField new];
-        if (automaticallyAttemptToUnlockSwitch && ([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1)) [[self passcodeEntryField] addTarget:self action:@selector(attemptAutomaticUnlock) forControlEvents:UIControlEventEditingChanged];
+        [[self passcodeEntryField] addTarget:self action:@selector(attemptAutomaticUnlock) forControlEvents:UIControlEventEditingChanged];
         [[self passcodeEntryField] addTarget:self action:@selector(updatePasscodeEntryEditingStateStyle) forControlEvents:UIControlEventEditingDidBegin];
         [[self passcodeEntryField] addTarget:self action:@selector(updatePasscodeEntryEditingStateStyle) forControlEvents:UIControlEventEditingDidEnd];
         [[self passcodeEntryField] setTextColor:[UIColor whiteColor]];
@@ -2651,6 +2651,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
     %orig;
 
     if (automaticallyFocusTheEntryFieldSwitch && [[%c(SBLockScreenManager) sharedInstance] isLockScreenVisible]) [[self passcodeEntryField] becomeFirstResponder];
+    passcodeLeaveTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(leavePasscodeScreenDueToTimeout) userInfo:nil repeats:NO];
 
 }
 
@@ -2670,6 +2671,13 @@ SBFWallpaperView* lockscreenWallpaper = nil;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.35 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [coverSheetView resetDiaryViewTransform];
     });
+
+}
+
+%new
+- (void)leavePasscodeScreenDueToTimeout {
+
+    [self passcodeLockViewCancelButtonPressed:0];
 
 }
 
@@ -2702,6 +2710,9 @@ SBFWallpaperView* lockscreenWallpaper = nil;
             [[self passcodeEntryView] setAlpha:1];
         } completion:nil];
     } else {
+        [passcodeLeaveTimer invalidate];
+        passcodeLeaveTimer = nil;
+
         if (!enableSpotlightSwitch) {
             [UIView animateWithDuration:0.5 delay:0.2 usingSpringWithDamping:3 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 [lockscreenWallpaper setTransform:CGAffineTransformIdentity];
@@ -2761,6 +2772,9 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 %new
 - (void)attemptManualUnlock { // attempt to unlock the device with the entered passcode
 
+    [passcodeLeaveTimer invalidate];
+    passcodeLeaveTimer = nil;
+    
     if ([[%c(SBLockScreenManager) sharedInstance] isUILocked]) [self showIncorrectPasswordView];
     if ((([passcodeTypeValue intValue] == 0 || [passcodeTypeValue intValue] == 1) && [[[self passcodeEntryField] text] length] < 4) || ([passcodeTypeValue intValue] == 2 && [[[self passcodeEntryField] text] length] == 0)) return;
     [[%c(SBLockScreenManager) sharedInstance] attemptUnlockWithPasscode:[NSString stringWithFormat:@"%@", [[self passcodeEntryField] text]] finishUIUnlock:1 completion:nil];
@@ -2771,6 +2785,9 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 
 %new
 - (void)attemptAutomaticUnlock { // automatically attempt to unlock if the input is 4 or 6 characters long
+
+    [passcodeLeaveTimer invalidate];
+    passcodeLeaveTimer = nil;
     
     if (([passcodeTypeValue intValue] == 0 && [[[self passcodeEntryField] text] length] == 4) || ([passcodeTypeValue intValue] == 1 && [[[self passcodeEntryField] text] length] == 6)) {
         [[%c(SBLockScreenManager) sharedInstance] attemptUnlockWithPasscode:[NSString stringWithFormat:@"%@", [[self passcodeEntryField] text]] finishUIUnlock:1 completion:nil];
@@ -2815,6 +2832,19 @@ SBFWallpaperView* lockscreenWallpaper = nil;
 - (void)authenticatedWithBiometrics { // automatically unlock when authenticated with biometrics
 
     [[%c(SBLockScreenManager) sharedInstance] unlockUIFromSource:17 withOptions:nil];
+
+}
+
+%end
+
+%hook SBLockScreenManager
+
+- (void)lockUIFromSource:(int)arg1 withOptions:(id)arg2 { // change wallpaper when locked
+
+	%orig;
+
+    [passcodeLeaveTimer invalidate];
+    passcodeLeaveTimer = nil;
 
 }
 

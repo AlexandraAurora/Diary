@@ -92,6 +92,8 @@ NSString* passcodeEntryEffectColorValue = @"8580D0";
 BOOL automaticallyAttemptToUnlockSwitch = YES;
 BOOL automaticallyFocusTheEntryFieldSwitch = YES;
 
+NSTimer* passcodeLeaveTimer = nil;
+
 
 // miscellaneous
 NSString* overrideStyleValue = @"0";
@@ -286,6 +288,7 @@ BOOL hideDefaultPageDotsSwitch = YES;
 @property(nonatomic, retain)UILabel* incorrectPasswordLabel;
 @property(nonatomic, retain)UIButton* incorrectPasswordButton;
 @property(nonatomic, retain)UITapGestureRecognizer* tapGesture;
+- (void)leavePasscodeScreenDueToTimeout;
 - (void)animatePasscodeScreenIn:(BOOL)animateIn;
 - (void)updatePasscodeEntryEditingStateStyle;
 - (void)attemptManualUnlock;
