@@ -1,6 +1,9 @@
 # Diary 📖
 Dear diary..
 
+## Preview
+<img src="preview.png">
+
 ## Installation
 1. Add this repository to your package manager: `TBD`
 2. Install Diary
