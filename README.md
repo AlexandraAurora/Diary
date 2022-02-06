@@ -1,5 +1,5 @@
 # Diary 📖
-Dear diary..
+Windows 10/11 lock screen replica
 
 ## Preview
 <img src="preview.png">
@@ -23,7 +23,7 @@ iPhone, iPad and iPod running iOS/iPadOS 13 or later
 ## Compiling
   - [Theos](https://theos.dev/) is required to compile the project
   - Depends on [libKitten](https://github.com/schneelittchen/libKitten), [libPDDokdo](https://github.com/s8ngyu/libpddokdo) and [libGCUniversal](https://github.com/MrGcGamer/LibGcUniversalDocumentation)
-  - You may want to edit the root `Makefile` to use your Theos SDK and toolchain
+  Windows 10/11 lock screen replica
 
 ## License
 If you take code from this repository please link it, or my [Twitter](https://twitter.com/schneelittchen) to your project<br>
