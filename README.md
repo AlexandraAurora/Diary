@@ -2,7 +2,7 @@
 Windows 10/11 lock screen replica
 
 ## Preview
-<img src="preview.png">
+<img src="Preview.png">
 
 ## Installation
 1. Add this repository to your package manager: `TBD`
