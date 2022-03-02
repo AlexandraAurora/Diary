@@ -1520,7 +1520,7 @@ SBFWallpaperView* lockscreenWallpaper = nil;
                 else if ([telephonyInfo.serviceCurrentRadioAccessTechnology[dataServiceIdentifier] isEqual:CTRadioAccessTechnologyHSDPA]) [[coverSheetView diaryCellularTypeLabel] setText:@"3G"];
                 else if ([telephonyInfo.serviceCurrentRadioAccessTechnology[dataServiceIdentifier] isEqual:CTRadioAccessTechnologyHSUPA]) [[coverSheetView diaryCellularTypeLabel] setText:@"3G"];
                 else if ([telephonyInfo.serviceCurrentRadioAccessTechnology[dataServiceIdentifier] isEqual:CTRadioAccessTechnologyeHRPD]) [[coverSheetView diaryCellularTypeLabel] setText:@"3G"];
-                if (@available(iOS 14.0, *)) {
+                if (@available(iOS 14.1, *)) {
                     if ([telephonyInfo.serviceCurrentRadioAccessTechnology[dataServiceIdentifier] isEqual:CTRadioAccessTechnologyNR] || [telephonyInfo.serviceCurrentRadioAccessTechnology[dataServiceIdentifier] isEqual:CTRadioAccessTechnologyNRNSA]) [[coverSheetView diaryCellularTypeLabel] setText:@"5G"];
                 }
             }
