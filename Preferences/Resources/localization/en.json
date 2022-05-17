@@ -1,0 +1,8 @@
+{
+  "ALL_DAY": "All day",
+  "ALARM": "Alarm",
+  "PASSWORD": "Password",
+  "INCORRECT_PASSWORD": "The password is incorrect. Try again.",
+  "PROVIDE_PASSWORD": "Provide a PIN.",
+  "OK": "OK"
+}

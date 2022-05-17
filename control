@@ -1,0 +1,10 @@
+Package: love.litten.diary
+Name: Diary 📖
+Depends: mobilesubstrate, preferenceloader, ws.hbang.common (>= 1.14), firmware (>= 13.0), com.mrgcgamer.libgcuniversal, com.peterdev.libpddokdo, love.litten.libkitten
+Conflicts: hi.my.name.is.ubik.kalm, com.peterdev.grupi, se.nosskirneh.properlockgestures
+Version: 1.2.2
+Architecture: iphoneos-arm
+Description: Dear diary..
+Maintainer: Litten
+Author: Litten
+Section: Tweaks

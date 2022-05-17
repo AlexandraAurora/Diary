@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo ""
+echo "       __..._   _...__      "
+echo "  _..-'       Y       '-._  "
+echo "  \           |           / "
+echo "  \\          |          // "
+echo "  \\\         |         /// "
+echo "   \\\ _..---.|.---.._ ///  "
+echo "    \\ _..---.Y.---.._ //   "
+echo "     '                 '    "
+echo ""
+echo "Thank You For Installing Diary 1.2.2 🤗"
+echo ""

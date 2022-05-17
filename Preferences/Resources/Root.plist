@@ -1,0 +1,219 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1//EN" "http://www.apple.com/DTDs/PropertyList-1.dtd">
+<plist version="1">
+<dict>
+	<key>items</key>
+	<array>
+	
+		<dict>
+			<key>cellClass</key>
+			<string>DuoTwitterCell</string>
+			<key>firstLabel</key>
+			<string>🌸 Litten</string>
+			<key>firstAccount</key>
+			<string>schneelittchen</string>
+			<key>secondLabel</key>
+			<string>taki</string>
+			<key>secondAccount</key>
+			<string>74k1_</string>
+			<key>height</key>
+			<real>57</real>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Settings</string>
+			<key>footerText</key>
+			<string>Most changes require a respring, some immediately</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Time and date</string>
+ 			<key>detail</key>
+ 			<string>DRYTimeDateSubPreferencesListController</string>
+ 			<key>DRYSub</key>
+ 			<string>sub/timeDate</string>
+ 		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>iPhone hello</string>
+ 			<key>detail</key>
+ 			<string>DRYHelloSubPreferencesListController</string>
+ 			<key>DRYSub</key>
+ 			<string>sub/hello</string>
+ 		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Media player</string>
+ 			<key>detail</key>
+ 			<string>DRYMediaPlayerSubPreferencesListController</string>
+ 			<key>DRYSub</key>
+ 			<string>sub/mediaPlayer</string>
+ 		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Background</string>
+ 			<key>detail</key>
+ 			<string>DRYBackgroundSubPreferencesListController</string>
+ 			<key>DRYSub</key>
+ 			<string>sub/background</string>
+ 		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Passcode</string>
+ 			<key>detail</key>
+ 			<string>DRYPasscodeSubPreferencesListController</string>
+ 			<key>DRYSub</key>
+ 			<string>sub/passcode</string>
+ 		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Miscellaneous</string>
+ 			<key>detail</key>
+ 			<string>DRYMiscellaneousSubPreferencesListController</string>
+ 			<key>DRYSub</key>
+ 			<string>sub/miscellaneous</string>
+ 		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Other options</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Respring</string>
+			<key>action</key>
+			<string>respring</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Reset preferences</string>
+			<key>action</key>
+			<string>resetPrompt</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Contributions</string>
+		</dict>
+		<dict>
+ 			<key>cell</key>
+ 			<string>PSLinkCell</string>
+ 			<key>label</key>
+ 			<string>Contributors</string>
+ 			<key>detail</key>
+ 			<string>DRYContributorsSubPreferencesListController</string>
+ 			<key>DRYSub</key>
+ 			<string>sub/contributors</string>
+ 		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>You might like:</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Ventana</string>
+			<key>subtitle</key>
+			<string>The inspiration for Diary</string>
+			<key>icon</key>
+			<string>featured/Ventana.png</string>
+			<key>url</key>
+			<string>https://repo.packix.com/package/org.coolstar.ventana-modern/</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Yuna</string>
+			<key>subtitle</key>
+			<string>Extend your iPad's control center</string>
+			<key>icon</key>
+			<string>featured/Yuna.png</string>
+			<key>url</key>
+			<string>https://repo.litten.love/depictions/Yuna/</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Diary by Litten, inspired by Coolstar's Ventana</string>
+			<key>isStaticText</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Discord</string>
+			<key>subtitle</key>
+			<string>Chat with us 👾</string>
+			<key>url</key>
+			<string>https://discord.gg/tKUPZrS7ve</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Source code</string>
+			<key>subtitle</key>
+			<string>GitHub 📖</string>
+			<key>url</key>
+			<string>https://github.com/schneelittchen/Diary</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Donate to Litten</string>
+			<key>subtitle</key>
+			<string>Appreciated 💝</string>
+			<key>url</key>
+			<string>https://paypal.me/Litteeen</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<key>PSGroupCell</key>
+			<key>footerText</key>
+			<string>loving with the sky</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>footerAlignment</key>
+			<real>1</real>
+		</dict>
+
+	</array>
+	<key>title</key>
+	<string>Diary</string>
+</dict>
+</plist>
